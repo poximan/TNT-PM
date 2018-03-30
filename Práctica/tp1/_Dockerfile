@@ -1,9 +1,0 @@
-FROM httpd:latest
-MAINTAINER <poxi_man@yahoo.com>
-RUN apt-get update -qq
-RUN apt-get install -qq -y build-essential
-
-ADD . /src
-RUN $(pwd)
-RUN gcc src/mi_programa.c -o mi_programa
-CMD ["/home/don_tato/mi_programa"]
