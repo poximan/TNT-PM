@@ -1,0 +1,15 @@
+{
+  "name": "pto10",
+  "version": "1.0.0",
+  "description": "tp1ej10",
+  "main": "pto10.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "mongodb": "^3.0.1"
+  },
+  "author": "",
+  "license": "ISC"
+}
