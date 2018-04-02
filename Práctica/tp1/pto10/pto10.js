@@ -1,32 +1,33 @@
 var express = require('express');
 var app = express();
-
 var MongoClient = require("mongodb").MongoClient;
-var mongo_prot = "mongodb://";
-var mongo_serv = "127.0.0.3:27017/";
-var mongo_bd = "bd_docker";
+
+var db_global;
 
 /*
 ......... servidor http
 */
 app.get('/', function (req, res) {
-  res.send('Hello World!');
+
+  if(db_global == undefined)
+    res.send('pto10 - servidor node/express sin mongo :(');
+  else
+    res.send('pto10 - servidor node/express con mongo :)');
 });
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+app.listen(3001, function () {
+  console.log('Example app listening on port 3001!');
 });
 
 /*
 ......... persistencia
 */
-var db_global;
-var url = mongo_prot + mongo_serv;
-MongoClient.connect(url, function(err, db) {
+// MongoClient.connect('mongodb://localhost:27017/test', function(err, db) {
+MongoClient.connect('mongodb://mongo:27017/test', function(err, db) {
 
   if(err) throw err;
 
-  var dbase = db.db(mongo_bd);
+  var dbase = db.db("bd_docker");
   dbase.createCollection("colecc_docker");
   db_global = dbase;
 });

@@ -3,10 +3,10 @@ services:
   web:
     build: .
     ports: # huesped:anfitrion
-      - "127.0.0.2:3001:3001"
+      - "3001:3001"
     links:
       - mongo
   mongo:
     image: "mongo"
     ports: # huesped:anfitrion
-      - "127.0.0.3:27017:27017"
+      - "27017:27017"
