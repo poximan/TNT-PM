@@ -1,0 +1,17 @@
+{
+  "name": "pto1",
+  "version": "1.0.0",
+  "description": "tp2ej1",
+  "main": "pto1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "red": ""
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "mongodb": "^3.0.1",
+    "node-red": "^0.18.4"
+  },
+  "author": "",
+  "license": "ISC"
+}

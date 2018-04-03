@@ -1,0 +1,13 @@
+version: '2'
+services:
+  web:
+    build: .
+    ports: # huesped:anfitrion
+      - "3002:3002"
+      - "1880:1880"
+    links:
+      - mongo
+  mongo:
+    image: "mongo"
+    ports: # huesped:anfitrion
+      - "27017:27017"
