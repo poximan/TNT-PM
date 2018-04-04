@@ -1,13 +1,39 @@
 version: '2'
 services:
-  web:
-    build: .
+
+  # toma como base la imagen definida en Dockerfile + las modificaciones
+  # propias de este + redireccion de puertos desde aqui
+  node-red:
+    build: ./img-node-red/ .
     ports: # huesped:anfitrion
-      - "3002:3002"
       - "1880:1880"
     links:
+      - storage-api
+
+  storage-api:
+    build: ./img-storage-api/ .
+    ports: # huesped:anfitrion
+      - "3002:3002"
+    links:
       - mongo
+
+  # proxy inverso
+  nginx:
+    image: nginx
+    volumes:
+     - ./img-proxy:/etc/nginx/conf.d/mysite.template
+    ports:
+     - "8080:80"
+    links:
+      - node-red
+
   mongo:
     image: "mongo"
     ports: # huesped:anfitrion
       - "27017:27017"
+
+  mqtt:
+    image: eclipse-mosquitto
+    ports: # huesped:anfitrion
+      - "1883:1883"
+      - "9001:9001"
