@@ -21,9 +21,9 @@ services:
   nginx:
     image: nginx
     volumes:
-     - ./img-proxy:/etc/nginx/conf.d/mysite.template
+     - ./img-proxy/nginx/:/etc/nginx/
     ports:
-     - "8080:80"
+     - "80:80"
     links:
       - node-red
 
