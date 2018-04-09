@@ -21,11 +21,12 @@ services:
   nginx:
     image: nginx
     volumes:
-     - ./img-proxy/nginx/:/etc/nginx/
+      - ./img-proxy/nginx/:/etc/nginx/
     ports:
-     - "80:80"
+      - "80:80"
     links:
       - node-red
+      - mqtt
 
   mongo:
     image: "mongo"
