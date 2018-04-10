@@ -5,6 +5,8 @@ services:
   # propias de este + redireccion de puertos desde aqui
   node-red:
     build: ./img-node-red/ .
+    volumes:
+      - ./img-node-red/storage/:/home/src/node_modules/node-red/red/runtime/storage/
     ports: # huesped:anfitrion
       - "1880:1880"
     links:
