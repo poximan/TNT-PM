@@ -24,7 +24,7 @@ services:
     image: nginx
     volumes:
       - ./img-proxy/nginx/:/etc/nginx/
-    ports:
+    #ports:
       - "80:80"
     links:
       - node-red
