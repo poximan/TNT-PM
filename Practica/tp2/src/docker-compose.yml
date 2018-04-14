@@ -15,16 +15,16 @@ services:
   storage-api:
     build: ./img-storage-api/ .
     ports: # huesped:anfitrion
-      - "3002:3002"
-    links:
+      - "3000:3000"
+    depends_on:
       - mongo
 
   # proxy inverso
   nginx:
-    image: nginx
+    build: ./img-proxy/ .
     volumes:
       - ./img-proxy/nginx/:/etc/nginx/
-    #ports:
+    ports: # huesped:anfitrion
       - "80:80"
     links:
       - node-red

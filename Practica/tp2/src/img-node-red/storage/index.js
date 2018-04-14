@@ -70,7 +70,7 @@ var storageModuleInterface = {
         },
         getFlows: function() {
 
-            console.log("getFlow!!!!!!!!!!!!");
+            console.log("usando getFlows original");
 
             return storageModule.getFlows().then(function(flows) {
                 return storageModule.getCredentials().then(function(creds) {
@@ -85,8 +85,7 @@ var storageModuleInterface = {
         },
         saveFlows: function(config) {
 
-            require("./rest/post");
-            console.log("saveFlow!!!!!!!!!!!!");
+            console.log("usando saveFlows original");
 
             var flows = config.flows;
             var credentials = config.credentials;

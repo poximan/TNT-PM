@@ -10,6 +10,8 @@ COPY ./package.json /home/src/
 WORKDIR /home/src
 RUN npm install
 
+COPY ./settings.js /home/src/node_modules/node-red
+
 # There can only be one CMD instruction in a Dockerfile. If you list more than one CMD
 # then only the last CMD will take effect. The main purpose of a CMD is to provide
 # defaults for an executing container.
