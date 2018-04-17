@@ -13,8 +13,6 @@ httpStorage.getFlows = function () {
 
   return new Promise((resolve, reject) => {
 
-    console.log("usando getFlows pichicateado");
-
     http.get(
       {
         host: api.HOST,
@@ -42,8 +40,6 @@ httpStorage.getFlows = function () {
 httpStorage.saveFlows = function (flows) {
     return new Promise((resolve, reject) => {
 
-      console.log("usando saveFlows pichicateado");
-
       const options = {
           host: api.HOST,
           port: api.PORT,
@@ -56,23 +52,19 @@ httpStorage.saveFlows = function (flows) {
           res.setEncoding('utf8');
 
           res.on('data', (chunk) => {
-              console.log('Respuesta del servidor:', chunk);
           });
-
           res.on('end', () => {
-              console.log('Flows enviados, codigo', res.statusCode);
               resolve();
           });
       });
 
       req.on('error', (err) => {
-          console.error('Error al realizar el request', err.message);
           reject(err.message);
       });
 
-      console.log(flows);
       // write data to request body
       req.write(JSON.stringify(flows));
+      console.log(req.output[2]);
       req.end();
     });
 }

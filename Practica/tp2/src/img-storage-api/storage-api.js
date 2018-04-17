@@ -9,41 +9,29 @@ var db_global;
 */
 app.post('/api/saveFlows', function (req, res) {
 
-  console.log("save!");
-  console.log(req.res);
+  let body = [];
+  req.on('data', (chunk) => {
+    body.push(chunk);
+  }).on('end', () => {
+    body = Buffer.concat(body).toString();
+    persistir(body);
+  });
 
-  if(db_global == undefined)
-    res.send('servidor node/express sin mongo :(');
-  else
-    res.send('servidor node/express con mongo :)');
 });
 
 app.get('/api/getFlows', function (req, res) {
-
-  console.log("get!");
-  console.log(req.body);
-
-  if(db_global == undefined)
-    res.send('servidor node/express sin mongo :(');
-  else
-    res.send('servidor node/express con mongo :)');
+  console.log("respondiendo get");
 });
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 });
 
-persistir = function() {
+persistir = function(body) {
 
   try {
     console.log("INT: persistiendo estado");
-    var coleccion_obj = db_global.collection(coleccion);
-
-    compras.forEach(function(compra){
-      coleccion_obj.update({id:compra.id}, compra, {up:true});
-    });
-
-    console.log("INT: estado persistido");
+    db_global.colecc_docker.save({ _id: 100, version: "1", flows: body });
   } catch (e) {
     console.error("INT: no es posible presistir estado en este momento");
   } finally { }

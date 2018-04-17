@@ -16,3 +16,4 @@ RUN npm install
 # defaults for an executing container.
 RUN apk --update add bash
 CMD ["node", "storage-api.js"]
+#CMD ["node", "--inspect-brk=0.0.0.0:9229", "storage-api.js"]

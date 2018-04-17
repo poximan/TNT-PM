@@ -17,3 +17,4 @@ COPY ./settings.js /home/src/node_modules/node-red
 # defaults for an executing container.
 RUN apk --update add bash
 CMD ["node_modules/node-red/bin/node-red-pi", "-u", "."]
+#CMD ["node", "--inspect-brk=0.0.0.0:9229", "node_modules/node-red/red.js", "-u", "."]

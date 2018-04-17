@@ -70,8 +70,6 @@ var storageModuleInterface = {
         },
         getFlows: function() {
 
-            console.log("usando getFlows original");
-
             return storageModule.getFlows().then(function(flows) {
                 return storageModule.getCredentials().then(function(creds) {
                     var result = {
@@ -84,8 +82,6 @@ var storageModuleInterface = {
             });
         },
         saveFlows: function(config) {
-
-            console.log("usando saveFlows original");
 
             var flows = config.flows;
             var credentials = config.credentials;
@@ -230,7 +226,5 @@ function listFlows(path) {
         });
     });
 }
-
-
 
 module.exports = storageModuleInterface;
