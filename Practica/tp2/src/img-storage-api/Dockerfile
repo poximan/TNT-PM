@@ -15,5 +15,13 @@ RUN npm install
 # then only the last CMD will take effect. The main purpose of a CMD is to provide
 # defaults for an executing container.
 RUN apk --update add bash
-CMD ["node", "storage-api.js"]
-#CMD ["node", "--inspect-brk=0.0.0.0:9229", "storage-api.js"]
+
+COPY ./espera.sh ./
+RUN chmod +x ./espera.sh
+ENV SERVIDOR mongo
+ENV PUERTO 27017
+ENV COMANDO "node storage-api.js"
+
+RUN bash ./espera.sh
+#CMD ["node", "storage-api.js"]
+#CMD ["node", "--inspect-brk=0.0.0.0:9229", "conex-mongo.js"]

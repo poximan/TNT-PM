@@ -64,7 +64,6 @@ httpStorage.saveFlows = function (flows) {
 
       // write data to request body
       req.write(JSON.stringify(flows));
-      console.log(req.output[2]);
       req.end();
     });
 }

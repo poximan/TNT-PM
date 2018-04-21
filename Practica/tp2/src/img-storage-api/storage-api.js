@@ -30,8 +30,8 @@ app.listen(3000, function () {
 persistir = function(body) {
 
   try {
-    console.log("INT: persistiendo estado");
-    db_global.colecc_docker.save({ _id: 100, version: "1", flows: body });
+    console.log(body);
+    //db_global.colecc_docker.save({ _id: 100, version: "1", flows: body });
   } catch (e) {
     console.error("INT: no es posible presistir estado en este momento");
   } finally { }
