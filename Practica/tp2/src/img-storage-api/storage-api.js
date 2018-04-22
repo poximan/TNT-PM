@@ -10,6 +10,7 @@ var db_global;
 app.post('/api/saveFlows', function (req, res) {
 
   let body = [];
+
   req.on('data', (chunk) => {
     body.push(chunk);
   }).on('end', () => {
@@ -17,10 +18,12 @@ app.post('/api/saveFlows', function (req, res) {
     persistir(body);
   });
 
+  res.send(body);
 });
 
 app.get('/api/getFlows', function (req, res) {
   console.log("respondiendo get");
+  res.send([]);
 });
 
 var listener = app.listen(3000, function(){
@@ -30,10 +33,14 @@ var listener = app.listen(3000, function(){
 persistir = function(body) {
 
   try {
+
     console.log(body);
-    //db_global.colecc_docker.save({ _id: 100, version: "1", flows: body });
+    var coleccion_obj = db_global.collection("colecc_docker");
+    coleccion_obj.save({ version: new Date(), flows: body });
+
   } catch (e) {
-    console.error("INT: no es posible presistir estado en este momento");
+    console.error("ERROR: no es posible presistir estado");
+    console.error(e);
   } finally { }
 }
 

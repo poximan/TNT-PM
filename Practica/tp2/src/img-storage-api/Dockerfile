@@ -22,7 +22,7 @@ RUN dos2unix ./espera.sh
 
 ENV SERVIDOR mongo
 ENV PUERTO 27017
-#ENV COMANDO "node storage-api.js"
-ENV COMANDO "node --inspect-brk=0.0.0.0:9229 storage-api.js"
+ENV COMANDO "node storage-api.js"
+#ENV COMANDO "node --inspect-brk=0.0.0.0:9229 storage-api.js"
 
 CMD ["bash", "./espera.sh"]
