@@ -9,7 +9,7 @@ docker-compose dónde utilice a:
 * mqtt configurado con transporte websockets.
 
 Cree el CMD adecuado para que el servicio node exponga la UI de Node-RED.
-![alt text](https://github.com/poximan/TNT-PM/tree/master/imagenes/node-red.png "Node Red")<br/>
+![alt text](https://github.com/poximan/TNT-PM/tree/master/Practica/tp2/imagenes/node-red.png "Node Red")<br/>
 
 Se espera que los tanto Node-RED y mqtt puedan operar sobre el mismo punto de entrada http, sin utilizar puertos diferentes.
 
