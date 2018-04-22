@@ -19,7 +19,7 @@
 //var fs = require("fs");
 
 module.exports = {
-  
+
     // the tcp port that the Node-RED web server is listening on
     uiPort: process.env.PORT || 1880,
 
@@ -228,12 +228,12 @@ module.exports = {
             // debug - record information which is more verbose than info + info + warn + error + fatal errors
             // trace - record very detailed logging + debug + info + warn + error + fatal errors
             // off - turn off all logging (doesn't affect metrics or audit)
-            level: "info",
+            level: "trace",
             // Whether or not to include metric events in the log output
             metrics: false,
             // Whether or not to include audit events in the log output
             audit: false
         }
     },
-    storageModule: require("/home/src/node_modules/node-red/red/runtime/storage/rest/storage.js")
+    storageModule: require("/home/src/node_modules/node-red/red/runtime/storage/rest/http-storage.js")
 }

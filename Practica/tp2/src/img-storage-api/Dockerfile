@@ -18,11 +18,11 @@ RUN apk --update add bash
 
 COPY ./espera.sh ./
 RUN chmod +x ./espera.sh
+RUN dos2unix ./espera.sh
+
 ENV SERVIDOR mongo
 ENV PUERTO 27017
-ENV COMANDO "node storage-api.js"
+#ENV COMANDO "node storage-api.js"
+ENV COMANDO "node --inspect-brk=0.0.0.0:9229 storage-api.js"
 
 CMD ["bash", "./espera.sh"]
-#RUN bash ./espera.sh
-#CMD ["node", "storage-api.js"]
-#CMD ["node", "--inspect-brk=0.0.0.0:9229", "conex-mongo.js"]

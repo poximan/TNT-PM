@@ -17,7 +17,7 @@ services:
     build: ./img-storage-api/ .
     ports: # huesped:anfitrion
       - "3000:3000"
-      #- "9229:9229"
+      - "9229:9229"
     depends_on:
       - mongo
 
@@ -30,15 +30,15 @@ services:
       - "80:80"
     links:
       - node-red
-      #- mqtt
+      - mqtt
 
   mongo:
     image: "mongo"
     ports: # huesped:anfitrion
       - "27017:27017"
 
-#  mqtt:
-#    image: eclipse-mosquitto
-#    ports: # huesped:anfitrion
-#      - "1883:1883"
-#      - "9001:9001"
+  mqtt:
+    image: eclipse-mosquitto
+    ports: # huesped:anfitrion
+      - "1883:1883"
+      - "9001:9001"

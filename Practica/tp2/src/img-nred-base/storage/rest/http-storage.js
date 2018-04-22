@@ -30,12 +30,15 @@ httpStorage.getFlows = function () {
             receivedData += data;
         });
 
+        // response contains: [{ flows: [], version: '', id: '' }].
         response.on('end', function () {
-            resolve([receivedData]);
+          let data = JSON.parse(receivedData);
+          let flows = (data && data.length) ? data[0].flows : [];
+          resolve(flows);
         });
       });
     });
-}
+  }
 
 httpStorage.saveFlows = function (flows) {
     return new Promise((resolve, reject) => {
@@ -63,9 +66,9 @@ httpStorage.saveFlows = function (flows) {
       });
 
       // write data to request body
-      req.write(JSON.stringify(flows));
+      req.write(JSON.stringify({ flows: flows, version: new Date() }));
       req.end();
     });
-}
+  }
 
 module.exports = httpStorage;

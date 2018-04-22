@@ -23,8 +23,8 @@ app.get('/api/getFlows', function (req, res) {
   console.log("respondiendo get");
 });
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+var listener = app.listen(3000, function(){
+    console.log('Escuchando puerto ' + listener.address().port);
 });
 
 persistir = function(body) {
@@ -40,7 +40,7 @@ persistir = function(body) {
 /*
 ......... persistencia
 */
-MongoClient.connect('mongodb://mongo:27017/test', function(err, db) {
+MongoClient.connect('mongodb://mongo:27017/bd_docker', function(err, db) {
 
   if(err) throw err;
 
