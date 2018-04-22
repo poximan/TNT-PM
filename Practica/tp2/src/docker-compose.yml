@@ -4,9 +4,9 @@ services:
   # toma como base la imagen definida en Dockerfile + las modificaciones
   # propias de este + redireccion de puertos desde aqui
   node-red:
-    build: ./img-node-red/ .
+    build: ./img-nred-base/ .
     volumes:
-      - ./img-node-red/storage/:/home/src/node_modules/node-red/red/runtime/storage/
+      - ./img-nred-edit/storage/:/home/src/node_modules/node-red/red/runtime/storage/
     ports: # huesped:anfitrion
       - "1880:1880"
       #- "9229:9229"
@@ -30,15 +30,15 @@ services:
       - "80:80"
     links:
       - node-red
-      - mqtt
+      #- mqtt
 
   mongo:
     image: "mongo"
     ports: # huesped:anfitrion
       - "27017:27017"
 
-  mqtt:
-    image: eclipse-mosquitto
-    ports: # huesped:anfitrion
-      - "1883:1883"
-      - "9001:9001"
+#  mqtt:
+#    image: eclipse-mosquitto
+#    ports: # huesped:anfitrion
+#      - "1883:1883"
+#      - "9001:9001"

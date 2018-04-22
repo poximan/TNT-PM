@@ -22,6 +22,7 @@ ENV SERVIDOR mongo
 ENV PUERTO 27017
 ENV COMANDO "node storage-api.js"
 
-RUN bash ./espera.sh
+CMD ["bash", "./espera.sh"]
+#RUN bash ./espera.sh
 #CMD ["node", "storage-api.js"]
 #CMD ["node", "--inspect-brk=0.0.0.0:9229", "conex-mongo.js"]
