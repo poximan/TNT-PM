@@ -5,7 +5,21 @@ var MongoClient = require("mongodb").MongoClient;
 var db_global;
 
 /*
-......... servidor http
+......... GET
+*/
+app.get('/api/getFlows', function (req, res) {
+
+  var coleccion_obj = db_global.collection("colecc_docker");
+  var doc = coleccion_obj.findOne( { ultimo: true } );
+
+  doc.then(function(result) {   
+   let ret = (result == null? [] : result.flows)
+   res.send(ret);
+  })
+});
+
+/*
+......... POST
 */
 app.post('/api/saveFlows', function (req, res) {
 
@@ -15,34 +29,47 @@ app.post('/api/saveFlows', function (req, res) {
     body.push(chunk);
   }).on('end', () => {
     body = Buffer.concat(body).toString();
-    persistir(body);
+
+    let flows = JSON.parse(body);
+    var coleccion_obj = db_global.collection("colecc_docker");
+
+    const persistir = async () => {
+      await actualizarAnterior(coleccion_obj)
+      return guardarNuevo(coleccion_obj, flows)
+    }
+    persistir();
   });
 
   res.send(body);
 });
 
-app.get('/api/getFlows', function (req, res) {
-  console.log("respondiendo get");
-  res.send([]);
-});
+/*
+......... aux post
+*/
+function actualizarAnterior(coleccion_obj){
+  try {
+    coleccion_obj.updateOne(
+      { ultimo: true },
+      { $set: { ultimo: false } }
+    );
+  } catch (e) {
+    console.error(e);
+  } finally { }
+}
+
+function guardarNuevo(coleccion_obj, flows){
+  try {
+    coleccion_obj.save(
+      { ultimo: true, fecha: new Date(), flows: flows }
+    );
+  } catch (e) {
+    console.error(e);
+  } finally { }
+}
 
 var listener = app.listen(3000, function(){
     console.log('Escuchando puerto ' + listener.address().port);
 });
-
-persistir = function(body) {
-
-  try {
-
-    console.log(body);
-    var coleccion_obj = db_global.collection("colecc_docker");
-    coleccion_obj.save({ version: new Date(), flows: body });
-
-  } catch (e) {
-    console.error("ERROR: no es posible presistir estado");
-    console.error(e);
-  } finally { }
-}
 
 /*
 ......... persistencia
