@@ -1,7 +1,7 @@
 FROM node:alpine
 MAINTAINER <poxi_man@yahoo.com>
 
-WORKDIR /home/src
+WORKDIR /home/src/
 
 # The COPY instruction copies new files or directories from <src> and adds them to the filesystem
 # of the container at the path <dest>.
@@ -11,7 +11,8 @@ COPY ./package.json ./
 # and commit the results. The resulting committed image will be used for the next step in the Dockerfile.
 RUN npm install
 
-COPY ./settings.js /home/src/node_modules/node-red/
+COPY ./settings.js node_modules/node-red/
+COPY ./settings.js ./
 RUN apk --update add bash
 
 CMD ["node_modules/node-red/bin/node-red-pi", "-u", "."]

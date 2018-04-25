@@ -7,17 +7,11 @@ services:
     build: ./img-nred-base/ .
     volumes:
       - ./img-nred-base/storage/:/home/src/node_modules/node-red/red/runtime/storage/
-    ports: # huesped:anfitrion
-      - "1880:1880"
-      - "9229:9229"
     depends_on:
       - storage-api
 
   storage-api:
     build: ./img-storage-api/ .
-    ports: # huesped:anfitrion
-      - "3000:3000"
-      #- "9229:9229"
     depends_on:
       - mongo
 
@@ -28,7 +22,8 @@ services:
       - ./img-proxy/nginx/:/etc/nginx/
     ports: # huesped:anfitrion
       - "80:80"
-    depends_on:
+      #- "9229:9229"
+    links:
       - node-red
       - mqtt
 
@@ -38,10 +33,6 @@ services:
       - "27017:27017"
 
   mqtt:
-    image: eclipse-mosquitto
+    build: ./img-mosquitto/ .
     volumes:
-      - ./img-mosquitto/etc-mosq:/etc/mosquitto
-      - ./img-mosquitto/root-mosq:/mosquitto
-    ports: # huesped:anfitrion
-      - "1883:1883"
-      - "9001:9001"
+      - ./img-mosquitto/mosquitto/:/mosquitto
