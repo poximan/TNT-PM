@@ -42,3 +42,9 @@ Esto levantara todos los servicios segun lo especificado en el archivo docker-co
 docker-compose run {nombre servicio}
 ```
 Esto levantara el servicio que coincida con el nombre dado. Este nombre debe existir en docker-compose.yml
+
+### Node-Red
+Desde un navegador web pedir la pagina http://localhost/flow
+
+### Probador interno para mqtt alojado en nginx
+Desde un navegador web pedir la pagina http://localhost/msg/test
