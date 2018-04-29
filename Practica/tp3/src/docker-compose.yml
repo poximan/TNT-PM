@@ -1,0 +1,37 @@
+version: '2'
+services:
+
+  node-red:
+    build: ./img-nred-base/ .
+    volumes:
+      - ./img-nred-base/storage/:/home/src/node_modules/node-red/red/runtime/storage/
+    depends_on:
+      - storage-api
+
+  # api para almacenar flows en mongo
+  storage-api:
+    build: ./img-storage-api/ .
+    depends_on:
+      - mongo
+
+  # proxy inverso
+  nginx:
+    build: ./img-proxy/ .
+    volumes:
+      - ./img-proxy/nginx/:/etc/nginx/
+      - ./img-proxy/hivemq-mqtt-web-client/:/etc/hivemq-mqtt-web-client/msg/test
+    ports: # huesped:anfitrion
+      - "80:80"
+      #- "9229:9229"
+    links:
+      - node-red
+      - msg
+
+  mongo:
+    image: "mongo"
+
+  # broker de mensajes mqtt
+  msg:
+    build: ./img-mosquitto/ .
+    volumes:
+      - ./img-mosquitto/mosquitto/:/mosquitto
