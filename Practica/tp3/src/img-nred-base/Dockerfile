@@ -9,7 +9,7 @@ COPY ./package.json ./
 
 # The RUN instruction will execute any commands in a new layer on top of the current image
 # and commit the results. The resulting committed image will be used for the next step in the Dockerfile.
-RUN npm install
+RUN npm install --unsafe-perm
 
 RUN apk --update add bash
 
