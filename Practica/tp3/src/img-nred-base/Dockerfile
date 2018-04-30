@@ -16,4 +16,3 @@ RUN apk --update add bash
 WORKDIR /home/src/api
 
 CMD ["node", "index.js"]
-#CMD ["node", "--inspect-brk=0.0.0.0:9229", "node_modules/node-red/red.js", "-u", "."]
