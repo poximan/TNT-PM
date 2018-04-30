@@ -5,6 +5,7 @@ services:
     build: ./img-nred-base/ .
     volumes:
       - ./img-nred-base/storage/:/home/src/node_modules/node-red/red/runtime/storage/
+      - ./img-nred-base/api/:/home/src/api/
     depends_on:
       - storage-api
 
