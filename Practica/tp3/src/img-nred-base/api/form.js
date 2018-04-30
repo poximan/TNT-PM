@@ -5,7 +5,8 @@ module.exports = function(app){
 
   app.get('/api', function (req, res) {
     res.sendFile('./public/index.html', {root: __dirname })
-    //res.send("respondiendo en api");
+    console.log("dirname");
+    console.log(__dirname);
   });
 
   return module;

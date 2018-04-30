@@ -1,0 +1,16 @@
+{
+  "name": "svg-storage",
+  "version": "1.0.0",
+  "description": "tp3",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "node-red" : {
+    "nodes": {
+      "lower-case": "svg-storage.js"
+    }
+  },
+  "author": "",
+  "license": "ISC"
+}
