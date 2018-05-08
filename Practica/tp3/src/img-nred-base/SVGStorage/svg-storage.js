@@ -6,7 +6,7 @@ module.exports = function(RED) {
     var node = this;
 
     node.on('input', function(msg) {
-        msg.payload = msg.payload.save();
+        msg.payload = msg.payload;
         node.send(msg);
     });
   }

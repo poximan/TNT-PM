@@ -4,10 +4,9 @@ var RED = require("node-red");
 
 // Create an Express app
 var app = express();
-require("./form")(app);
 
 // Add a simple route for static content served from 'public'
-app.use("/",express.static("public"));
+app.use("/", express.static("public"));
 
 // Create a server
 var server = http.createServer(app);
@@ -21,7 +20,7 @@ var settings = {
 };
 
 // Initialise the runtime with a server and settings
-RED.init(server,settings);
+RED.init(server, settings);
 
 // Serve the editor UI from /red
 app.use(settings.httpAdminRoot,RED.httpAdmin);

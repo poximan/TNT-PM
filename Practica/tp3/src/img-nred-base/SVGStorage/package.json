@@ -8,7 +8,7 @@
   },
   "node-red" : {
     "nodes": {
-      "lower-case": "svg-storage.js"
+      "svg-storage": "svg-storage.js"
     }
   },
   "author": "",
