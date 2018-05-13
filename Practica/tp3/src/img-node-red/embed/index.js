@@ -2,6 +2,9 @@ var http = require('http');
 var express = require("express");
 var RED = require("node-red");
 
+console.log("aca espresssssssssssssssssss");
+console.log(express);
+
 // Create an Express app
 var app = express();
 

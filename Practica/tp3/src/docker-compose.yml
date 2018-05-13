@@ -2,13 +2,11 @@ version: '2'
 services:
 
   node-red:
-    build: ./img-nred-base/
+    build: ./img-node-red/
     volumes:
-      - ./img-nred-base/storage/:/home/src/node_modules/node-red/red/runtime/storage/
-      - ./img-nred-base/api/:/home/src/api/
-      - ./img-nred-base/SVGStorage/:/home/src/.nodered/
-    #ports: # huesped:anfitrion
-    #  - "8000:8000"
+      - ./img-node-red/storage/:/home/src/node_modules/node-red/red/runtime/storage/
+      - ./img-node-red/embed/:/home/src/embed/
+      - ./img-node-red/mis-nodos/node-red-contrib-svg-storage/:/home/src/mis-nodos/node-red-contrib-svg-storage
     depends_on:
       - storage-api
 

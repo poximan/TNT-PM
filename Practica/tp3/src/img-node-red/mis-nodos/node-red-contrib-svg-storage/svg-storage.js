@@ -11,5 +11,6 @@ module.exports = function(RED) {
         node.send(msg);
     });
   }
+  console.log("Cargando svg-storage");
   RED.nodes.registerType("svg-storage", SVGStorageNode);
 }
