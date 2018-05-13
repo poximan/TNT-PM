@@ -7,7 +7,6 @@ RUN mkdir -p embed
 
 WORKDIR /home/src/embed
 COPY embed/package*.json ./
-RUN mkdir -p node_modules
 
 RUN npm install
 
