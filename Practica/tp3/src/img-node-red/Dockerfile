@@ -9,8 +9,7 @@ WORKDIR /home/src/embed
 COPY embed/package*.json ./
 RUN mkdir -p node_modules
 
-RUN npm install -g npm
-RUN npm install -g
+RUN npm install
 
 COPY embed ./
 
