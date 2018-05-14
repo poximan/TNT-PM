@@ -1,4 +1,4 @@
-FROM node:8
+FROM node:carbon
 MAINTAINER <poxi_man@yahoo.com>
 
 WORKDIR /home/src
@@ -10,7 +10,7 @@ COPY embed/package*.json ./
 
 RUN npm install
 
-COPY embed ./
+COPY embed/ ./
 
 WORKDIR /home/src
 RUN mkdir -p mis-nodos

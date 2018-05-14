@@ -5,8 +5,6 @@ services:
     build: ./img-node-red/
     volumes:
       - ./img-node-red/storage/:/home/src/node_modules/node-red/red/runtime/storage/
-      - ./img-node-red/embed/:/home/src/embed/
-      - ./img-node-red/mis-nodos/node-red-contrib-svg-storage/:/home/src/mis-nodos/node-red-contrib-svg-storage
     depends_on:
       - storage-api
 
