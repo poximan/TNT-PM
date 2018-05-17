@@ -4,11 +4,13 @@
     category: 'function',
     color: '#a6bbcf',
     defaults: {
-      name: {value: ""}
+      name: {value: ""},
+      url: {value:""},
+      file: {value:""}
     },
     inputs:1,
     outputs:1,
-    icon: "file.png",
+    icon: "",
     label: function() {
       return this.name || "svg-storage";
     }
@@ -18,11 +20,20 @@
 
 <script type="text/x-red" data-template-name="svg-storage">
   <div class="form-row">
+      <label for="node-input-url"><i class="icon-tasks"></i> URL</label>
+      <input type="text" id="node-input-url" placeholder="http(s)://url">
+  </div>
+  <div class="form-row">
+      <label for="node-input-file"><i class="icon-tasks"></i> File</label>
+      <input type="text" id="node-input-file" placeholder="">
+  </div>
+  <div class="form-row">
     <label for="node-input-name"><i class="icon-tag"></i> Name</label>
     <input type="text" id="node-input-name" placeholder="Name">
   </div>
+  <div class="form-tips">The <b>Base URL</b> gets prepended to whatever payload is passed in. Leave blank if you pass in a full url.<br/>The append gets added to the end after any payload.<br/>The output Topic is the same as the input Topic.</div>
 </script>
 
 <script type="text/x-red" data-help-name="svg-storage">
-  <p>A simple node that converts the message payloads into all lower-case characters</p>
+  <p>nodo de utilidad para cargar archivos svg</p>
 </script>
