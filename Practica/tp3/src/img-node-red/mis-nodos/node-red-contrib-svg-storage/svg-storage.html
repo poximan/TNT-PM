@@ -1,18 +1,19 @@
 <script type="text/javascript">
 
-  RED.nodes.registerType('svg-storage', {
+  RED.nodes.registerType("svg-storage", {
     category: 'function',
     color: '#a6bbcf',
     defaults: {
-      name: {value: ""},
-      url: {value:""},
-      file: {value:""}
+      files: {value:""}
     },
     inputs:1,
     outputs:1,
-    icon: "",
+    icon: "icon-upload.png",
     label: function() {
       return this.name || "svg-storage";
+    },
+    oneditsave: () => {
+      return this.flows;
     }
   });
 
@@ -20,20 +21,27 @@
 
 <script type="text/x-red" data-template-name="svg-storage">
   <div class="form-row">
-      <label for="node-input-url"><i class="icon-tasks"></i> URL</label>
-      <input type="text" id="node-input-url" placeholder="http(s)://url">
+    <label for="node-input-files"> Seleccione archivo </label>
+    <input type="file" id="node-input-files" onchange="handleFileSelect(this.files)" name="files[]" multiple />
+
+    <input type="hidden" id="id_archivo" value="0">
+    <output id="list"></output>
   </div>
-  <div class="form-row">
-      <label for="node-input-file"><i class="icon-tasks"></i> File</label>
-      <input type="text" id="node-input-file" placeholder="">
-  </div>
-  <div class="form-row">
-    <label for="node-input-name"><i class="icon-tag"></i> Name</label>
-    <input type="text" id="node-input-name" placeholder="Name">
-  </div>
-  <div class="form-tips">The <b>Base URL</b> gets prepended to whatever payload is passed in. Leave blank if you pass in a full url.<br/>The append gets added to the end after any payload.<br/>The output Topic is the same as the input Topic.</div>
 </script>
 
 <script type="text/x-red" data-help-name="svg-storage">
-  <p>nodo de utilidad para cargar archivos svg</p>
+  <p> Cargador de archivos </p>
+</script>
+
+<script>
+  function handleFileSelect(files) {
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0, f; f = files[i]; i++) {
+      output.push('<li><strong>', encodeURI(f.name), '</strong>',
+      ' - ', f.size, ' bytes', '</li>');
+    }
+    document.getElementById('list').innerHTML += '<ul>' + output.join('') + '</ul>';
+  }
 </script>

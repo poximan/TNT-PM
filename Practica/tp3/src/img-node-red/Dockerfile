@@ -17,3 +17,5 @@ RUN npm install /home/mis-nodos/node-red-contrib-svg-storage
 
 WORKDIR /home/embed/src
 CMD ["node", "index.js"]
+#CMD ["node", "--inspect-brk=0.0.0.0:9229", "index.js"]
+#CMD ["node", "--inspect=0.0.0.0:9229", "index.js"]

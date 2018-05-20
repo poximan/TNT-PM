@@ -6,11 +6,16 @@ module.exports = function(RED) {
     var node = this;
 
     node.on('input', function(msg) {
-        // aca falta agregar comportamiento
-        msg.payload = msg.payload;
-        node.send(msg);
+      // aca falta agregar comportamiento
+      console.log(msg);
+      msg.payload = msg.payload;
+      node.send(msg);
     });
   }
+
+  console.log(".-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.");
   console.log("node-red: Cargando svg-storage");
+  console.log(".-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.");
+
   RED.nodes.registerType("svg-storage", SVGStorageNode);
 }

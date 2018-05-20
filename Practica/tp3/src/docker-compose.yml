@@ -6,6 +6,8 @@ services:
     volumes:
       - ./img-node-red/storage/:/home/src/node_modules/node-red/red/runtime/storage/
       - ./img-node-red/mis-nodos/:/home/mis-nodos/
+    #ports: # huesped:anfitrion
+    #  - "9229:9229"
     depends_on:
       - storage-api
 

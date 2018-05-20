@@ -11,6 +11,9 @@
       "svg-storage": "svg-storage.js"
     }
   },
+  "dependencies": {
+    "poster": ""
+  },
   "author": "",
   "license": "ISC"
 }
