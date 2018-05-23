@@ -4,16 +4,14 @@
     category: 'function',
     color: '#a6bbcf',
     defaults: {
-      files: {value:""}
+      nombre: { value: "" },
+      contenido: { value: "" }
     },
     inputs:1,
     outputs:1,
     icon: "icon-upload.png",
     label: function() {
       return this.name || "svg-storage";
-    },
-    oneditsave: () => {
-      return this.flows;
     }
   });
 
@@ -21,11 +19,14 @@
 
 <script type="text/x-red" data-template-name="svg-storage">
   <div class="form-row">
-    <label for="node-input-files"> Seleccione archivo </label>
-    <input type="file" id="node-input-files" onchange="handleFileSelect(this.files)" name="files[]" multiple />
+    <label for="carga-archivo"> Seleccione archivo </label>
+    <input type="file" id="carga-archivo" onchange="handleFileSelect(this.files)" accept="image/svg+xml" multiple/>
 
-    <input type="hidden" id="id_archivo" value="0">
     <output id="list"></output>
+
+    <input type="hidden" id="id_archivo" value="0" />
+    <input type="hidden" id="node-input-nombre" >
+    <input type="hidden" id="node-input-contenido" >
   </div>
 </script>
 
@@ -34,14 +35,29 @@
 </script>
 
 <script>
-  function handleFileSelect(files) {
+  function handleFileSelect(archivos) {
 
     // files is a FileList of File objects. List some properties.
     var output = [];
-    for (var i = 0, f; f = files[i]; i++) {
+    for (var i = 0, f; f = archivos[i]; i++){
+
+      if (i == 0) {
+        var reader = new FileReader();
+        reader.onload = (function (f) {
+          return function (progress) {
+            var content = progress.currentTarget.result;
+            document.getElementById('node-input-nombre').value = f.name;
+            document.getElementById('node-input-contenido').value = content;
+          };
+        })(f);
+        // read in the image file as a data.
+        reader.readAsText(f);
+      }
+
       output.push('<li><strong>', encodeURI(f.name), '</strong>',
       ' - ', f.size, ' bytes', '</li>');
     }
+
     document.getElementById('list').innerHTML += '<ul>' + output.join('') + '</ul>';
   }
 </script>

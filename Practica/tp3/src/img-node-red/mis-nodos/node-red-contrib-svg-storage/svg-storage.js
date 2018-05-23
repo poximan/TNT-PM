@@ -2,18 +2,40 @@ module.exports = function(RED) {
 
   function SVGStorageNode(config) {
 
-    console.log("aca no llega");
     RED.nodes.createNode(this, config);
 
-    this.files = config.files;
+    this.nombre = config.nombre;
+    this.contenido = config.contenido;
+
     var node = this;
 
-    // punto 4 - agregar la capacidad de responder mensajes
     this.on('input', function(msg) {
 
-      if(msg.topic == "svg-list"){
-        msg.payload = files;
+      let req = msg.req;
+      let res = msg.res;
+      let payload = msg.payload;
+
+      console.log("REQ URL ---------------------------------------------");
+      console.log(req.url);
+
+      console.log("REQ QUERY ---------------------------------------------");
+      console.log(req.query);
+
+      console.log("REQ PARAMS ---------------------------------------------");
+      console.log(req.params);
+
+      console.log("PAYLOAD ---------------------------------------------");
+      console.log(payload);
+
+      if(msg.req.params.topic == "svg-list"){
+        console.log("pide la lista");
+        msg.payload = this.contenido;
       }
+
+      if(msg.req.params.topic.startsWith("svg-get-")){
+        console.log("pide un archivo");
+      }
+
       node.send(msg);
     });
 
@@ -23,31 +45,13 @@ module.exports = function(RED) {
       else
         node.log("nodo no removido");
 
-      var global_context = this.context().global;
-      global_context.set("files", ["archiv1", "archiv2"])
-
-      node.log("nodo terminado");
       done();
     })
-
-    this.status({fill:"red", shape:"ring", text:"deconectado"})
-
   }
 
   console.log(".-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.");
   console.log("node-red: Cargando svg-storage");
   console.log(".-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.");
 
-  console.log("antes de registrar el tipo");
   RED.nodes.registerType("svg-storage", SVGStorageNode);
-  console.log("despues de registrar el tipo");
-
-/*
-  var id = setInterval(function(){
-    console.log("prueba");
-    //console.log(node.files);
-    console.log(RED.nodes.getNodeList);
-    //clearInterval(id);
-  }, 100000);
-  */
 }

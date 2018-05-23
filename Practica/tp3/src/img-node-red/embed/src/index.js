@@ -14,7 +14,7 @@ var server = http.createServer(app);
 // Create the settings object - see default settings.js file for other options
 var settings = {
     httpAdminRoot:"/red",
-    httpNodeRoot: "/api",
+    httpNodeRoot: "/sca",
     userDir:"/home/src/.nodered/",
     functionGlobalContext: { }    // enables global context
 };
