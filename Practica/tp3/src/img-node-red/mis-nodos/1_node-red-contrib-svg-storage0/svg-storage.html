@@ -1,0 +1,51 @@
+<script type="text/javascript">
+
+  RED.nodes.registerType('svg-storage', {
+    category: 'function',
+    color: '#a6bbcf',
+    inputs:1,
+    outputs:1,
+    icon: "icon-upload.png",
+    label: function() {
+      return this.name || "svg-storage";
+    }
+  });
+
+</script>
+
+<script type="text/x-red" data-template-name="svg-storage">
+  <div class="form-row" id="lista">
+    <label for="node-input"> Seleccione archivo </label>
+    <input type="file" onchange="agregarArchivo()" id="node-input" placeholder="archivo">
+    <input type="hidden" id="id_archivo" value="0">
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="svg-storage">
+  <p> Cargador de archivos </p>
+</script>
+
+<script>
+
+  function agregarArchivo() {
+
+    console.log(document.getElementById("node-input").value);
+
+    // tomar proximo id desde elemento oculto
+    let id_archivo_txt = document.getElementById("id_archivo").value;
+    let id_archivo = parseInt(id_archivo_txt);
+    id_archivo++;
+
+    var archivo = document.getElementById("node-input").value;
+    var lista_archivo = document.createElement("input");
+
+    lista_archivo.setAttribute("type", "hidden");
+    lista_archivo.setAttribute("id", id_archivo);
+
+    console.log(lista_archivo);
+
+    // actualizar valor de proximo id
+    document.getElementById("id_archivo").value = id_archivo;
+  }
+
+</script>

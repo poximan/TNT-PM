@@ -1,14 +1,15 @@
 <script type="text/javascript">
 
-  RED.nodes.registerType('svg-storage', {
+  RED.nodes.registerType("svg-storage", {
     category: 'function',
     color: '#a6bbcf',
     defaults: {
-      name: {value: ""}
+      nombre: { value: "" },
+      contenido: { value: "" }
     },
     inputs:1,
     outputs:1,
-    icon: "file.png",
+    icon: "icon-upload.png",
     label: function() {
       return this.name || "svg-storage";
     }
@@ -18,11 +19,45 @@
 
 <script type="text/x-red" data-template-name="svg-storage">
   <div class="form-row">
-    <label for="node-input-name"><i class="icon-tag"></i> Name</label>
-    <input type="text" id="node-input-name" placeholder="Name">
+    <label for="carga-archivo"> Seleccione archivo </label>
+    <input type="file" id="carga-archivo" onchange="handleFileSelect(this.files)" accept="image/svg+xml" multiple/>
+
+    <output id="list"></output>
+
+    <input type="hidden" id="id_archivo" value="0" />
+    <input type="hidden" id="node-input-nombre" >
+    <input type="hidden" id="node-input-contenido" >
   </div>
 </script>
 
 <script type="text/x-red" data-help-name="svg-storage">
-  <p>A simple node that converts the message payloads into all lower-case characters</p>
+  <p> Cargador de archivos </p>
+</script>
+
+<script>
+  function handleFileSelect(archivos) {
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0, f; f = archivos[i]; i++){
+
+      if (i == 0) {
+        var reader = new FileReader();
+        reader.onload = (function (f) {
+          return function (progress) {
+            var content = progress.currentTarget.result;
+            document.getElementById('node-input-nombre').value = f.name;
+            document.getElementById('node-input-contenido').value = content;
+          };
+        })(f);
+        // read in the image file as a data.
+        reader.readAsText(f);
+      }
+
+      output.push('<li><strong>', encodeURI(f.name), '</strong>',
+      ' - ', f.size, ' bytes', '</li>');
+    }
+
+    document.getElementById('list').innerHTML += '<ul>' + output.join('') + '</ul>';
+  }
 </script>
