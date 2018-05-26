@@ -4,8 +4,14 @@ module.exports = function(RED) {
 
     RED.nodes.createNode(this, config);
 
-    this.nombre = config.nombre;
-    this.contenido = config.contenido;
+    this.archivos = new Array(config.cantidad);
+
+    for(var i = 0; i < config.cantidad; i++){
+      this.archivos[i] = {
+        id: config["archivo_contenido_"+i],
+        name: config["archivo_nombre_"+i]
+      }
+    }
 
     var node = this;
 
@@ -28,12 +34,21 @@ module.exports = function(RED) {
       console.log(payload);
 
       if(msg.req.params.topic == "svg-list"){
+
         console.log("pide la lista");
-        msg.payload = this.contenido;
+        msg.payload = this.archivos[0].id;
       }
 
       if(msg.req.params.topic.startsWith("svg-get-")){
-        console.log("pide un archivo");
+
+        var indice = msg.req.params.topic.split("-").pop();
+        console.log("pide archivo " + indice);
+
+        if(this.archivos.length > indice)
+          msg.payload = this.archivos[indice].id;
+        else {
+          msg.payload = "<p> no existe archivo, probar con numero mas bajo </p>";
+        }
       }
 
       node.send(msg);
