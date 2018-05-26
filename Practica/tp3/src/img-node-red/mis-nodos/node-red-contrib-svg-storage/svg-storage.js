@@ -4,9 +4,10 @@ module.exports = function(RED) {
 
     RED.nodes.createNode(this, config);
 
-    this.archivos = new Array(config.cantidad);
+    this.cantidad = config.cantidad;
+    this.archivos = new Array(this.cantidad);
 
-    for(var i = 0; i < config.cantidad; i++){
+    for(var i = 0; i < this.cantidad; i++){
       this.archivos[i] = {
         id: config["archivo_contenido_"+i],
         name: config["archivo_nombre_"+i]
@@ -21,25 +22,30 @@ module.exports = function(RED) {
       let res = msg.res;
       let payload = msg.payload;
 
-      console.log("REQ URL ---------------------------------------------");
+      console.log("REQ URL ----------------------");
       console.log(req.url);
 
-      console.log("REQ QUERY ---------------------------------------------");
+      console.log("REQ QUERY ----------------------");
       console.log(req.query);
 
-      console.log("REQ PARAMS ---------------------------------------------");
+      console.log("REQ PARAMS ----------------------");
       console.log(req.params);
 
-      console.log("PAYLOAD ---------------------------------------------");
+      console.log("PAYLOAD ----------------------");
       console.log(payload);
 
-      if(msg.req.params.topic == "svg-list"){
+      if(req.params.topic == "svg-list"){
 
         console.log("pide la lista");
-        msg.payload = this.archivos[0].id;
+
+        var acumulado = "";
+        for (var i = 0; i < this.cantidad; i++)
+          acumulado += Buffer.from(this.archivos[i].id);
+
+        msg.payload = acumulado;
       }
 
-      if(msg.req.params.topic.startsWith("svg-get-")){
+      if(req.params.topic.startsWith("svg-get-")){
 
         var indice = msg.req.params.topic.split("-").pop();
         console.log("pide archivo " + indice);
