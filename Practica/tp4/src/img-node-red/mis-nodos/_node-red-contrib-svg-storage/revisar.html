@@ -1,0 +1,43 @@
+<script type="text/javascript">
+
+  RED.nodes.registerType('svg-storage', {
+    category: 'function',
+    color: '#a6bbcf',
+    defaults: {
+      name: {value: ""},
+      url: {value:""},
+      file: {value:""}
+    },
+    inputs:1,
+    outputs:1,
+    icon: "../../imagenes/icon-upload.png",
+    label: function() {
+      return this.name || "svg-storage";
+    }
+    oneditprepare: () => {
+      console.log("entrando nuevo archivo");
+      debugger;
+      $("#text-area").text("entrando nuevo archivo");
+    }
+  });
+
+</script>
+
+<script type="text/x-red" data-template-name="svg-storage">
+  <div class="form-row">
+    <label for="node-input-name"> <i class="icon-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+    <label for="node-svg-input"><i class="icon-tag"></i> Archivo: </label>
+  </div>
+
+  <div class="form-row">
+    <input type="file" id="node-svg-input" placeholder="Name">
+    <input type="text" id="text-area">
+  </div>
+
+  <div class="form-tips">The <b>Base URL</b> gets prepended to whatever payload is passed in. Leave blank if you pass in a full url.<br/>The append gets added to the end after any payload.<br/>The output Topic is the same as the input Topic.</div>
+</script>
+
+<script type="text/x-red" data-help-name="svg-storage">
+  <p>nodo de utilidad para cargar archivos svg</p>
+</script>
