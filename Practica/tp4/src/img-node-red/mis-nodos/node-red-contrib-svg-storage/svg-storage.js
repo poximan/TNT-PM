@@ -18,43 +18,56 @@ module.exports = function(RED) {
 
     this.on('input', function(msg) {
 
-      let req = msg.req;
-      let res = msg.res;
-      let payload = msg.payload;
+      console.log("ID MSG -> %s", msg._msgid);
 
-      console.log("REQ URL ----------------------");
-      console.log(req.url);
+      if (msg.req != undefined ){
 
-      console.log("REQ QUERY ----------------------");
-      console.log(req.query);
+        console.log("HTTP - req url -> %s", msg.req.url);
+        console.log("HTTP - req params -> %s", JSON.stringify(msg.req.params));
 
-      console.log("REQ PARAMS ----------------------");
-      console.log(req.params);
+        if(msg.req.params.topic == "svg-list"){
 
-      console.log("PAYLOAD ----------------------");
-      console.log(payload);
+          console.log("pide la lista");
 
-      if(req.params.topic == "svg-list"){
+          var acumulado = "";
 
-        console.log("pide la lista");
+          if(this.archivos.length > 0)
+            for (var i = 0; i < this.cantidad; i++)
+              acumulado += Buffer.from(this.archivos[i].id);
+          else {
+            acumulado = "<p> no existen archivos para mostrar </p>";
+          }
 
-        var acumulado = "";
-        for (var i = 0; i < this.cantidad; i++)
-          acumulado += Buffer.from(this.archivos[i].id);
+          msg.payload = acumulado;
+        }
 
-        msg.payload = acumulado;
+        if(msg.req.params.topic.startsWith("svg-get-")){
+
+          var indice = msg.req.params.topic.split("-").pop();
+          console.log("pide archivo " + indice);
+
+          if(this.archivos.length > indice)
+            msg.payload = this.archivos[indice].id;
+          else {
+            msg.payload = "<p> no existe archivo, probar con numero mas bajo </p>";
+          }
+        }
       }
 
-      if(req.params.topic.startsWith("svg-get-")){
+      if (msg.topic != undefined ){
 
-        var indice = msg.req.params.topic.split("-").pop();
-        console.log("pide archivo " + indice);
+        console.log("WEBSOCKETS -> %s", JSON.stringify(msg));
 
-        if(this.archivos.length > indice)
-          msg.payload = this.archivos[indice].id;
+        var acumulado = "";
+
+        if(this.archivos.length > 0)
+          for (var i = 0; i < this.cantidad; i++)
+            acumulado += Buffer.from(this.archivos[i].id);
         else {
-          msg.payload = "<p> no existe archivo, probar con numero mas bajo </p>";
+          acumulado = "no existen archivos para mostrar";
         }
+
+        msg.payload = acumulado;
       }
 
       node.send(msg);
@@ -72,7 +85,6 @@ module.exports = function(RED) {
 
   console.log(".-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.");
   console.log("node-red: Cargando svg-storage");
-  console.log(".-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.");
 
   RED.nodes.registerType("svg-storage", SVGStorageNode);
 }

@@ -20,37 +20,48 @@ const express = require('express')
 const app = express()
 
 
+// mqtt ---------
+const mqtt = require('mqtt')
+let client;
+let msg_preparado = "<html> <body> <body/> <html/>";
+
+var id = setInterval(function(){
+
+  console.log(".-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.");
+  console.log("node-red: Conectando a broker mqtt");
+
+  client = mqtt.connect("mqtt://msg");
+  if(client != undefined){
+    clearInterval(id);
+
+    client.on('connect', () => {
+      client.subscribe('/prueba')
+    })
+
+    client.on('message', (topic, message) => {
+
+      if(topic == "/prueba"){
+        console.log("topico " + topic);
+
+        if(typeof JSON.stringify(message) == "string")
+        message = "<html> <body> " + message + " <body/> <html/>";
+
+        msg_preparado = message;
+      }
+      else {
+        console.log("topico desconocido");
+      }
+    })
+  }
+}, 500);
+
 app.get('/red/msg', (req, res) => {
-
-  // mqtt ---------
-  const mqtt = require('mqtt')
-  const client = mqtt.connect("mqtt://msg");
-
-  res.send('conexion con broker mqtt')
-
-  client.on('connect', () => {
-    console.log("conectau");
-    client.subscribe('prueba')
-  })
-
-  let body = [];
-
-  client.on('message', (topic, message) => {
-    body.push(message);
-  }).on("end", () => {
-    console.log("fin");
-    body = Buffer.concat(body).toString();
-
-    if(topic === 'prueba') {
-      console.log(body);
-      body = [];
-    }
-  })
+  res.send(msg_preparado);
 })
 
 /* ................................
 ESCUCHADOR DE CONEXIONES ENTRANTES
 ................................ */
 var listener = app.listen(8100, function(){
-  console.log('Escuchando cliente web en puerto: ' + listener.address().port); //Listening on port 8888
+  console.log('Escuchando cliente web en puerto: ' + listener.address().port);
 });
