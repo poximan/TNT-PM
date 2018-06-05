@@ -6,7 +6,19 @@ var RED = require("node-red");
 var app = express();
 
 // Add a simple route for static content served from 'public'
-app.use("/", express.static("public"));
+app.use("/red", express.static("public"));
+app.use("/red/mqtt", express.static("public"));
+
+const resolve = require('path').resolve
+
+app.get('/red/mqtt', function (req, res, next) {
+  
+  res.sendFile(resolve("index.html"), function (err) {
+   if (err) {
+     next(err);
+   }
+ });
+});
 
 // Create a server
 var server = http.createServer(app);

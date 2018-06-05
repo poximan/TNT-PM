@@ -1,2 +1,2 @@
-websocketserver = 'localhost/mqtt/test';
-websocketport = 80;
+websocketserver = 'localhost/mqtt';
+websocketport = 1883;

@@ -30,7 +30,6 @@ services:
     links:
       - node-red
       - mqtt
-      - mqtt-web
 
   mqtt-web:
     build: ./img-mqtt-web
