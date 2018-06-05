@@ -1,5 +1,3 @@
-require("./suscriptor");
-
 var http = require('http');
 var express = require("express");
 var RED = require("node-red");

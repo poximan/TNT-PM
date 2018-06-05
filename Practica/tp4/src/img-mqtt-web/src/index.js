@@ -28,9 +28,9 @@ let msg_preparado = "<html> <body> <body/> <html/>";
 var id = setInterval(function(){
 
   console.log(".-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.");
-  console.log("node-red: Conectando a broker mqtt");
+  console.log("mqtt-web: Conectando a broker mqtt");
 
-  client = mqtt.connect("mqtt://msg");
+  client = mqtt.connect("mqtt://mqtt");
   if(client != undefined){
     clearInterval(id);
 
@@ -55,7 +55,7 @@ var id = setInterval(function(){
   }
 }, 500);
 
-app.get('/red/msg', (req, res) => {
+app.get('/mqtt-web', (req, res) => {
   res.send(msg_preparado);
 })
 

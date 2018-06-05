@@ -10,7 +10,7 @@ services:
     #  - "9229:9229"
     depends_on:
       - storage-api
-      - msg
+      - mqtt
 
   # api para almacenar flows en mongo
   storage-api:
@@ -23,19 +23,25 @@ services:
     build: ./img-proxy/
     volumes:
       - ./img-proxy/nginx/:/etc/nginx/
-      - ./img-proxy/hivemq-mqtt-web-client/:/etc/hivemq-mqtt-web-client/msg/test
+      - ./img-proxy/hivemq-mqtt-web-client/:/etc/hivemq-mqtt-web-client/mqtt/test
     ports: # huesped:anfitrion
       - "80:80"
       #- "9229:9229"
     links:
       - node-red
-      - msg
+      - mqtt
+      - mqtt-web
 
-  mongo:
-    image: "mongo"
+  mqtt-web:
+    build: ./img-mqtt-web
+    depends_on:
+      - mqtt
 
   # broker de mensajes mqtt
-  msg:
+  mqtt:
     build: ./img-mosquitto/
     volumes:
       - ./img-mosquitto/mosquitto/:/mosquitto
+
+  mongo:
+    image: "mongo"
