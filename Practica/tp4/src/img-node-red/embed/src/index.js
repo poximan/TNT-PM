@@ -7,10 +7,10 @@ const resolve = require('path').resolve
 var app = express();
 
 // Add a simple route for static content served from 'public'
-app.use("/red", express.static("public"));
+//app.use("/red", express.static("public"));
 app.use("/red/mqtt", express.static("public"));
 
-app.get('/red/mqtt', function (req, res, next) {  
+app.get('/red/mqtt', function (req, res, next) {
   res.sendFile(resolve("index.html"), function (err) {
     if (err) {
       next(err);

@@ -3,42 +3,18 @@
 
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title> Lectura archivo svg </title>
   </head>
 
-  <body onload="init();">
-    <p> llego archivo </p>
+  <body >
+    <div id="form-archiv">
+
+    </div>
   </body>
 
-  <script type="text/javascript" src="paho-mqtt.js"></script>
   <script type="text/javascript" src="d3.min.js"></script>
-  <script type="text/javascript">
-
-    var client = new Paho.MQTT.Client(window.location.host, 80, "/mqtt", "nuevo cliente");
-
-    client.onConnectionLost = function (responseObject) {
-      console.log("connection lost: " + responseObject.errorMessage);
-    };
-
-    client.onMessageArrived = function (message) {
-      console.log(message.destinationName, ' -- ', message.payloadString);
-    };
-
-    var options = {
-      onSuccess: function () {
-        console.log("mqtt connected");
-        // Connection succeeded; subscribe to our topic, you can add multile lines of these
-        client.subscribe('/prueba');
-      },
-      onFailure: function (message) {
-        console.log("Connection failed: " + message.errorMessage);
-      }
-    };
-
-    function init() {
-      client.connect(options);
-    }
-
-  </script>
+  <script type="text/javascript" src="jquery.min.js"></script>
+  <script type="text/javascript" src="paho-mqtt.js"></script>
+  <script type="text/javascript" src="cliente-mqtt.js"></script>
 
 </html>
