@@ -60,7 +60,12 @@ var options = {
 ----------- FUNCIONES ----------------
 */
 function agregarGrafico(grafico) {
-  $("#form-archiv").append(grafico);
+
+  var sampleSVG = d3.select("#canvas")
+    .append("svg");
+  sampleSVG.append(grafico);
+
+  //$("#form-archiv").append(grafico);
 }
 
 function editarAtributo(atributo) {
