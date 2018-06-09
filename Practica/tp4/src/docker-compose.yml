@@ -4,8 +4,9 @@ services:
   node-red:
     build: ./img-node-red/
     volumes:
-      - ./img-node-red/storage/:/home/src/node_modules/node-red/red/runtime/storage/
+      - ./img-node-red/storage/:/home/embed/node_modules/node-red/red/runtime/storage/
       - ./img-node-red/mis-nodos/:/home/mis-nodos/
+      - ./img-node-red/embed/src/:/home/embed/src/
     #ports: # huesped:anfitrion
     #  - "9229:9229"
     depends_on:
@@ -27,9 +28,8 @@ services:
     ports: # huesped:anfitrion
       - "80:80"
       #- "9229:9229"
-    links:
+    depends_on:
       - node-red
-      - mqtt
 
   mqtt-web:
     build: ./img-mqtt-web

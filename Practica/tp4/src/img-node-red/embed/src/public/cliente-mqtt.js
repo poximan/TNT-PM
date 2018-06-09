@@ -16,7 +16,7 @@ const suscrip_editar_todas = suscrip_editar+"/#";
 ----------- MENSAJES ----------------
 */
 client.onConnectionLost = function (responseObject) {
-  console.log("[MQTT] - se perdió conexion: " + responseObject.errorMessage);
+  console.log("[MQTT] - se perdió conexion: %s", responseObject.errorMessage);
 }
 
 client.onMessageArrived = function (message) {
@@ -72,7 +72,7 @@ function editarAtributo(atributo) {
   console.log("aca se edita grafico");
   console.log(atributo);
 
-  console.log(document.getElementById("form-archiv").innerHTML);
+  console.log(document.getElementById("canvas").innerHTML);
 }
 
 /*
