@@ -24,11 +24,11 @@ client.onMessageArrived = function (message) {
 
   console.log("[MQTT] - nuevo mensaje");
 
-  if(message._getDestinationName() == suscrip_nuevo)
-    agregarGrafico(message._getPayloadString())
+  if(message.topic == suscrip_nuevo)
+    agregarGrafico(message.payloadString)
 
-  if(message._getDestinationName().startsWith(suscrip_editar))
-    editarAtributo(message._getPayloadString())
+  if(message.topic.startsWith(suscrip_editar))
+    editarAtributo(message.payloadString)
 };
 
 var options = {
@@ -65,11 +65,7 @@ var options = {
 function agregarGrafico(grafico) {
 
   console.log("agregando grafico");
-  var sampleSVG = d3.select("#canvas")
-    .append("svg");
-  //sampleSVG.append(grafico);
-
-  //$("#form-archiv").append(grafico);
+  console.log(grafico);
 }
 
 function editarAtributo(atributo) {
