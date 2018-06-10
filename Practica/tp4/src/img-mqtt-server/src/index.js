@@ -28,19 +28,19 @@ let msg_preparado = "<html> <body> <body/> <html/>";
 var id = setInterval(function(){
 
   console.log(".-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.");
-  console.log("mqtt-web: Conectando a broker mqtt");
+  console.log("mqtt-server: Conectando a broker mqtt");
 
   client = mqtt.connect("mqtt://mqtt");
   if(client != undefined){
     clearInterval(id);
 
     client.on('connect', () => {
-      client.subscribe('/prueba')
+      client.subscribe('/canvas/#')
     })
 
     client.on('message', (topic, message) => {
 
-      if(topic == "/prueba"){
+      if(topic == "/canvas/nuevo"){
         console.log("topico " + topic);
 
         if(typeof JSON.stringify(message) == "string")
@@ -55,7 +55,7 @@ var id = setInterval(function(){
   }
 }, 500);
 
-app.get('/mqtt-web', (req, res) => {
+app.get('/mqtt-server', (req, res) => {
   res.send(msg_preparado);
 })
 

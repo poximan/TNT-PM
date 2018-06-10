@@ -18,7 +18,5 @@ COPY mis-nodos ../mis-nodos
 
 RUN npm install /home/mis-nodos/node-red-contrib-svg-storage
 
-#WORKDIR /home/src/.nodered/
-#CMD ["node", "/home/embed/src/index.js"]
-WORKDIR /home/embed
-CMD ["node", "./src/index.js"]
+WORKDIR /home/embed/src
+CMD ["node", "index.js"]

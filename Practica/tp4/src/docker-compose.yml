@@ -30,9 +30,10 @@ services:
       #- "9229:9229"
     depends_on:
       - node-red
+      - mqtt
 
-  mqtt-web:
-    build: ./img-mqtt-web
+  mqtt-server:
+    build: ./img-mqtt-server
     depends_on:
       - mqtt
 

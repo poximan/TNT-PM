@@ -3,6 +3,7 @@
 */
 const clientId = "clientId-" + parseInt(Math.random() * 100, 10).toString();
 console.log('Registrado como cliente: ' + clientId);
+console.log(window.location.host);
 var client = new Paho.MQTT.Client(window.location.host, 80, "/mqtt", clientId);
 
 /*
@@ -21,11 +22,13 @@ client.onConnectionLost = function (responseObject) {
 
 client.onMessageArrived = function (message) {
 
-  if(message.destinationName == suscrip_nuevo)
-    agregarGrafico(message.payloadString)
+  console.log("[MQTT] - nuevo mensaje");
 
-  if(message.destinationName.startsWith(suscrip_editar))
-    editarAtributo(message.payloadString)
+  if(message._getDestinationName() == suscrip_nuevo)
+    agregarGrafico(message._getPayloadString())
+
+  if(message._getDestinationName().startsWith(suscrip_editar))
+    editarAtributo(message._getPayloadString())
 };
 
 var options = {
@@ -61,9 +64,10 @@ var options = {
 */
 function agregarGrafico(grafico) {
 
+  console.log("agregando grafico");
   var sampleSVG = d3.select("#canvas")
     .append("svg");
-  sampleSVG.append(grafico);
+  //sampleSVG.append(grafico);
 
   //$("#form-archiv").append(grafico);
 }
