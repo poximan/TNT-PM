@@ -56,7 +56,9 @@ var options = {
       onFailure: () => { console.log('no se pudo realizar suscripcion a ' + suscrip_coccion_tambor_presion); }
     })
   },
-  onFailure: () => { console.log('no se pudo conectar'); }
+  onFailure: () => { console.log('no se pudo conectar'); },
+  userName: "cerv",
+  password: "cerv"
 };
 
 /*
