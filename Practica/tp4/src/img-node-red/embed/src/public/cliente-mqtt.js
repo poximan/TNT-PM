@@ -12,6 +12,7 @@ const suscrip_nuevo = "/canvas/nuevo";
 const suscrip_nuevo_todas = suscrip_nuevo+"/#";
 const suscrip_editar = "/canvas/editar";
 const suscrip_editar_todas = suscrip_editar+"/#";
+const suscrip_coccion_tambor_presion = "/pm/prod-cerveza/coccion/tambor/presion"
 
 const nuevo_rectangulo = "/rect"
 const nuevo_circulo = "/circle"
@@ -32,8 +33,7 @@ client.onMessageArrived = function (message) {
 
   if(message.topic.startsWith(suscrip_nuevo))
     agregarGrafico(message)
-
-  if(message.topic.startsWith(suscrip_editar))
+  else
     editarAtributo(message)
 };
 
@@ -49,6 +49,11 @@ var options = {
     client.subscribe(suscrip_editar_todas, {
       onSuccess: () => { console.log('suscripto a ' + suscrip_editar_todas); },
       onFailure: () => { console.log('no se pudo realizar suscripcion a ' + suscrip_editar_todas); }
+    })
+
+    client.subscribe(suscrip_coccion_tambor_presion, {
+      onSuccess: () => { console.log('suscripto a ' + suscrip_coccion_tambor_presion); },
+      onFailure: () => { console.log('no se pudo realizar suscripcion a ' + suscrip_coccion_tambor_presion); }
     })
   },
   onFailure: () => { console.log('no se pudo conectar'); }
@@ -97,10 +102,24 @@ function editarAtributo(message) {
   let selection = d3.select("svg").selectAll('[topico="' + message.topic + '"]');
   let params = JSON.parse(message.payloadString);
 
-  if (selection) {
-    selection.styles(params.styles);
-    selection.attrs(params.attrs);
-  }
+  selection.attr("fill", escalar(params));
+}
+
+function escalar(params) {
+  return rgb(parseInt(params) * (65535/5));
+}
+
+function rgb(num) {
+  num >>>= 0;
+  var b = num & 0xFF,
+      g = (num & 0xFF00) >>> 8,
+      r = (num & 0xFF0000) >>> 16,
+      a = ( (num & 0xFF000000) >>> 24 ) / 255 ;
+  return rgbToHex(r, g, b);
+}
+
+function rgbToHex(r, g, b) {
+  return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
 /*
