@@ -45,3 +45,5 @@ services:
 
   mongo:
     image: "mongo"
+    ports: # huesped:anfitrion
+      - "27017:27017"
