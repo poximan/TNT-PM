@@ -32,16 +32,19 @@ services:
       - node-red
       - mqtt
 
-  mqtt-server:
-    build: ./img-mqtt-server
-    depends_on:
-      - mqtt
+  #mqtt-server:
+  #  build: ./img-mqtt-server
+  #  depends_on:
+  #    - mqtt
 
   # broker de mensajes mqtt
   mqtt:
-    build: ./img-mosquitto/
+    build: ./img-mqtt-auth/
     volumes:
-      - ./img-mosquitto/mosquitto/:/mosquitto
+      - ./img-mqtt-auth/etc/mosquitto:/etc/mosquitto
+      - ./img-mqtt-auth/etc/mosquitto.d:/etc/mosquitto.d
+    links:
+      - mongo
 
   mongo:
     image: "mongo"
