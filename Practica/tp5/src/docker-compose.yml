@@ -1,0 +1,52 @@
+version: '2'
+services:
+
+  node-red:
+    build: ./img-node-red/
+    volumes:
+      - ./img-node-red/storage/:/home/embed/node_modules/node-red/red/runtime/storage/
+      - ./img-node-red/mis-nodos/:/home/mis-nodos/
+      - ./img-node-red/embed/src/:/home/embed/src/
+    #ports: # huesped:anfitrion
+    #  - "9229:9229"
+    depends_on:
+      - storage-api
+      - mqtt
+
+  # api para almacenar flows en mongo
+  storage-api:
+    build: ./img-storage-api/
+    depends_on:
+      - mongo
+
+  # proxy inverso
+  nginx:
+    build: ./img-proxy/
+    volumes:
+      - ./img-proxy/nginx/:/etc/nginx/
+      - ./img-proxy/hivemq-mqtt-web-client/:/etc/hivemq-mqtt-web-client/mqtt/test
+    ports: # huesped:anfitrion
+      - "80:80"
+      #- "9229:9229"
+    links:
+      - node-red
+      - mqtt
+
+  #mqtt-server:
+  #  build: ./img-mqtt-server
+  #  depends_on:
+  #    - mqtt
+
+  # broker de mensajes mqtt
+  mqtt:
+    build: ./img-mqtt-auth/
+    volumes:
+      - ./img-mqtt-auth/etc/mosquitto:/etc/mosquitto
+      - ./img-mqtt-auth/etc/mosquitto.d:/etc/mosquitto.d
+    links:
+      - mongo
+
+  mongo:
+    image: "mongo"
+    ports: # huesped:anfitrion
+      - "27017:27017"
