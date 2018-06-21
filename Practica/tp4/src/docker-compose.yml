@@ -28,7 +28,7 @@ services:
     ports: # huesped:anfitrion
       - "80:80"
       #- "9229:9229"
-    depends_on:
+    links:
       - node-red
       - mqtt
 
