@@ -3,6 +3,8 @@ var express = require("express");
 var RED = require("node-red");
 const resolve = require('path').resolve
 
+require("./autenticacion");
+
 // Create an Express app
 var app = express();
 

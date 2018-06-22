@@ -45,6 +45,8 @@ services:
       - ./img-mqtt-auth/etc/mosquitto.d:/etc/mosquitto.d
     links:
       - mongo
+    ports: # huesped:anfitrion
+      - "1883:1883"
 
   mongo:
     image: "mongo"
