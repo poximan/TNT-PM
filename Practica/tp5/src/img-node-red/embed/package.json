@@ -9,7 +9,8 @@
   "dependencies": {
     "express": "^4.16.2",
     "node-red": "^0.18.4",
-    "mqtt": "^2.18.0"
+    "mqtt": "^2.18.0",
+    "mongodb": "^3.0.1"
   },
   "author": "",
   "license": "ISC"
