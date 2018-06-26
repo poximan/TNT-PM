@@ -11,6 +11,7 @@ var prepareItem = function(source) {
   return result;
 };
 
+// leer documentos existentes
 router.get('/', function(req, res, next) {
 
   colecc_auth.find(JSON.stringify(req.query)).toArray(function(err, items) {
@@ -18,24 +19,43 @@ router.get('/', function(req, res, next) {
   });
 });
 
+// nuevo documento
 router.post('/', function(req, res, next) {
-  colecc_auth.insert(JSON.stringify(req.query)).toArray(function(err, items) {
+
+  colecc_auth.insertOne(req.body, function(err, item) {
     res.json(item);
   });
 });
 
+// modificar documento
 router.put('/', function(req, res, next) {
-  var item = req.body;
 
-  colecc_auth.update({ _id: item._id }, item, {}, function(err) {
+  var item = prepareItem(req.body);
+  var ObjectID = require('mongodb').ObjectID;
+
+  colecc_auth.update({ "_id": ObjectID(item._id) },
+  item,
+  /*
+  {
+    "username" : item.username,
+    "password" : item.password,
+    "superuser" : item.superuser,
+    "topic" : item.topic,
+    "access" : item.access
+  },
+  */
+  function(err) {
     res.json(item);
   });
 });
 
+// borrar documento
 router.delete('/', function(req, res, next) {
-  var item = prepareItem(req.body);
 
-  colecc_auth.remove({ _id: item._id }, {}, function(err) {
+  var item = prepareItem(req.body);
+  var ObjectID = require('mongodb').ObjectID;
+
+  colecc_auth.remove({ "_id": ObjectID(item._id) }, {}, function(err) {
     res.json(item);
   });
 });
@@ -46,10 +66,11 @@ MongoClient.connect('mongodb://mongo:27017/', function(err, db) {
 
   db = db.db("mqGate")
 
-  db.collection("users").insertMany(valores_iniciales).then(function(result) {
-    console.log("---> HACIA MONGO ---> usuarios por defecto cargados");
-    colecc_auth = db.collection("users")
-  })
+  //if(db.collection.find().count() <= 0)
+    db.collection("users").insertMany(valores_iniciales).then(function(result) {
+      console.log("---> HACIA MONGO ---> usuarios por defecto cargados");
+      colecc_auth = db.collection("users")
+    })
 })
 
 module.exports = router;
