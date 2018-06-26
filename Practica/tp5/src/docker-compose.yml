@@ -7,6 +7,7 @@ services:
       - ./img-node-red/storage/:/home/embed/node_modules/node-red/red/runtime/storage/
       - ./img-node-red/mis-nodos/:/home/mis-nodos/
       - ./img-node-red/embed/src/:/home/embed/src/
+      - ./img-node-red/crud/src/:/home/crud/src/
     #ports: # huesped:anfitrion
     #  - "9229:9229"
     depends_on:
@@ -42,6 +43,6 @@ services:
       - mongo
 
   mongo:
-    image: "mongo"
+    image: mongo
     ports: # huesped:anfitrion
       - "27017:27017"

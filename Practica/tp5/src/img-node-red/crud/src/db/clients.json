@@ -1,0 +1,30 @@
+[
+  {
+    "username": "hugo",
+    "password": "hugo",
+    "superuser": false,
+    "topic": "public/#",
+    "accesss": "r"
+  },
+  {
+    "username": "hugo",
+    "password": "hugo",
+    "superuser": true,
+    "topic": "PM/proceso/#",
+    "accesss": "rw"
+  },
+  {
+    "username": "seb",
+    "password": "seb",
+    "superuser": false,
+    "topic": "public/#",
+    "accesss": "r"
+  },
+  {
+    "username": "seb",
+    "password": "seb",
+    "superuser": true,
+    "topic": "PM/proceso/#",
+    "accesss": "rw"
+  }
+]

@@ -1,4 +1,4 @@
-FROM node:carbon
+FROM node:alpine
 MAINTAINER <poxi_man@yahoo.com>
 
 # creacion de carpetas

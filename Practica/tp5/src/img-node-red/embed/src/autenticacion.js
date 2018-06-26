@@ -60,16 +60,9 @@ server.listen(8089);
 /*
 ......... PERSISTENCIA
 */
-function existe(usr, pass) {
-    MongoClient.connect('mongodb://mongo:27017/animals', function(err, db) {
-    if (err) {
-      throw err;
-    }
-    db.collection('mammals').find().toArray(function(err, result) {
-      if (err) {
-        throw err;
-      }
-      return (result != undefined)? true : false;
-    });
-  });
-}
+MongoClient.connect('mongodb://mongo:27017/', function(err, db) {
+
+  if(err) throw err;
+  db = db.db("mqGate")
+  db.collection("users").find();
+})
