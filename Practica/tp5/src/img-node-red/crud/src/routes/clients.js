@@ -66,11 +66,14 @@ MongoClient.connect('mongodb://mongo:27017/', function(err, db) {
 
   db = db.db("mqGate")
 
-  //if(db.collection.find().count() <= 0)
-    db.collection("users").insertMany(valores_iniciales).then(function(result) {
-      console.log("---> HACIA MONGO ---> usuarios por defecto cargados");
-      colecc_auth = db.collection("users")
-    })
+  db.collection("users").count({}).then(function(res) {
+
+    if(res <= 0)
+      db.collection("users").insertMany(valores_iniciales).then(function(result) {
+        console.log("---> HACIA MONGO ---> usuarios por defecto cargados");
+        colecc_auth = db.collection("users")
+      })
+  })
 })
 
 module.exports = router;

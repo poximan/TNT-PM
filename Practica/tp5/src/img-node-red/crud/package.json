@@ -1,5 +1,5 @@
 {
-  "name": "JSGridExpressJSSample",
+  "name": "JSGrid para CRUD auth mqtt",
   "version": "1.0.0",
   "description": "Sample project for jsGrid with Node.js Express REST service",
   "dependencies": {
@@ -9,7 +9,6 @@
     "express": "~4.12.4",
     "jade": "~1.9.2",
     "morgan": "~1.5.3",
-    "nedb": "^1.1.2",
     "serve-favicon": "~2.2.1",
     "mongodb": "^3.0.1"
   },
