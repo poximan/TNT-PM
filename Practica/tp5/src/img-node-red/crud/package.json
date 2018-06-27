@@ -1,5 +1,5 @@
 {
-  "name": "JSGrid para CRUD auth mqtt",
+  "name": "JSGridAuthMqtt",
   "version": "1.0.0",
   "description": "Sample project for jsGrid with Node.js Express REST service",
   "dependencies": {
