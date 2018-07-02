@@ -20,18 +20,26 @@ services:
     depends_on:
       - mongo
 
-  # proxy inverso
-  nginx:
-    build: ./img-proxy/
-    volumes:
-      - ./img-proxy/nginx/:/etc/nginx/
-      - ./img-proxy/hivemq-mqtt-web-client/:/etc/hivemq-mqtt-web-client/mqtt/test
+  redbird:
+    build: ./img-crud/
     ports: # huesped:anfitrion
       - "80:80"
       #- "9229:9229"
     links:
       - node-red
       - mqtt
+  # proxy inverso
+  #nginx:
+  #  build: ./img-proxy/
+  #  volumes:
+  #    - ./img-proxy/nginx/:/etc/nginx/
+  #    - ./img-proxy/hivemq-mqtt-web-client/:/etc/hivemq-mqtt-web-client/mqtt/test
+  #  ports: # huesped:anfitrion
+  #    - "80:80"
+  #    #- "9229:9229"
+  #  links:
+  #    - node-red
+  #    - mqtt
 
   # broker de mensajes mqtt
   mqtt:
