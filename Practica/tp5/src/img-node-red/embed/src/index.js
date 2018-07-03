@@ -4,7 +4,6 @@ var RED = require("node-red");
 const resolve = require('path').resolve
 
 require("./autenticacion");
-require("../../crud/src/bin/www");
 
 // Create an Express app
 var app = express();

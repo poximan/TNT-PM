@@ -4,7 +4,6 @@ MAINTAINER <poxi_man@yahoo.com>
 RUN apk --update add bash
 
 # creacion de carpetas
-RUN mkdir -p /home/crud/src
 RUN mkdir -p /home/embed/src
 RUN mkdir -p /home/mis-nodos
 RUN mkdir -p /home/src/.nodered/
@@ -19,11 +18,6 @@ COPY embed/src src
 
 COPY mis-nodos ../mis-nodos
 RUN npm install /home/mis-nodos/node-red-contrib-svg-storage
-
-WORKDIR /home/crud
-ADD crud/package.json ./
-RUN npm install
-COPY crud/src src
 
 WORKDIR /home/embed/src
 CMD ["node", "index.js"]

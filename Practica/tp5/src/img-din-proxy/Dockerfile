@@ -5,11 +5,17 @@ RUN apk --update add bash
 
 # creacion de carpetas
 RUN mkdir -p /home/crud/src
+RUN mkdir -p /home/proxy/src
 
 WORKDIR /home/crud
-ADD ./package.json ./
+ADD crud/package.json ./
 RUN npm install
-COPY ./src src
+COPY crud/src src
 
-WORKDIR /home/crud/src
+WORKDIR /home/proxy
+ADD proxy/package.json ./
+RUN npm install
+COPY proxy/src src
+
+WORKDIR /home/proxy/src
 CMD ["node", "index.js"]
