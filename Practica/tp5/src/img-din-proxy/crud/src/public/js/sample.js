@@ -23,28 +23,28 @@ $(function() {
             loadData: function(filter) {
                 return $.ajax({
                     type: "GET",
-                    url: "/clients",
+                    url: "./clients",
                     data: filter
                 });
             },
             insertItem: function(item) {
                 return $.ajax({
                     type: "POST",
-                    url: "/clients",
+                    url: "./clients",
                     data: item
                 });
             },
             updateItem: function(item) {
                 return $.ajax({
                     type: "PUT",
-                    url: "/clients",
+                    url: "./clients",
                     data: item
                 });
             },
             deleteItem: function(item) {
                 return $.ajax({
                     type: "DELETE",
-                    url: "/clients",
+                    url: "./clients",
                     data: item
                 });
             }

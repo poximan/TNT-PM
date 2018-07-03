@@ -30,7 +30,8 @@ var settings = {
     httpNodeRoot: "/hmi",
     httpRoot:"/red",
     userDir:"/home/src/.nodered/",
-    functionGlobalContext: { }    // enables global context
+    functionGlobalContext: { },    // enables global context
+    storageModule: require("./http-storage"),
   };
 
 // Initialise the runtime with a server and settings
