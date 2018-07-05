@@ -20,7 +20,7 @@ $(function() {
                 data: filter
               });
             },
-            insertItem: function(item) {              
+            insertItem: function(item) {
               return $.ajax({
                 type: "POST",
                 url: "./clients",

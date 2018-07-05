@@ -11,7 +11,7 @@ function mirarBD() {
 
     nuevoNodeRed();
 
-    db.collection("proyectos").find({"proy-generado": false}).toArray(function(err, result) {
+    db.collection("proyectos").find({"proy-generado": false}, { "id-proyecto": 1 } ).toArray(function(err, result) {
       if (err) throw err;
       console.log(result);
     });
@@ -19,8 +19,12 @@ function mirarBD() {
 }
 
 setInterval(mirarBD, 5000);
-
-// start cmd /K "d: && cd d:\documentos\hugo\git\TNT-PM\Practica\tp5\src && docker-compose run -d node-red"
+var nombre = 0;
+/*
+docker-compose run -d --name hugosss node-red
+start cmd /K "d: && cd d:\documentos\hugo\git\TNT-PM\Practica\tp5\src && docker-compose run -d node-red"
+*/
 nuevoNodeRed = () => {
-  shell.execCommand("start " + terminal + " /C \"d: && cd \"" +  path_compose + "\" && docker-compose run -d node-red\"", function (returnvalue) {});
+  nombre++;
+  shell.execCommand("start " + terminal + " /C \"d: && cd \"" +  path_compose + "\" && docker-compose run -d --name node-red-\"" + nombre.toString() + "\" node-red\"", function (returnvalue) {});
 }

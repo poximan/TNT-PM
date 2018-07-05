@@ -46,3 +46,5 @@ server.listen(8000);
 
 // Start the runtime
 RED.start();
+
+console.log('Hello ' + process.env.INSTANCIA)

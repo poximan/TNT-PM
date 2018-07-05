@@ -1,6 +1,7 @@
 FROM node:alpine
 MAINTAINER <poxi_man@yahoo.com>
 
+ENV INSTANCIA "node-red-default"
 RUN apk --update add bash
 
 # creacion de carpetas

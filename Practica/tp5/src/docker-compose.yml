@@ -21,7 +21,7 @@ services:
   proxy:
     build: ./img-din-proxy/
     ports: # huesped:anfitrion
-      - "80:80"      
+      - "80:80"
       #- "9229:9229"
     links:
       - node-red
