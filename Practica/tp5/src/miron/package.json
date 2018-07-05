@@ -1,0 +1,14 @@
+{
+  "name": "obsmongoactiva",
+  "version": "1.0.0",
+  "description": "Observador de nuevos documentos en mongo, con espera activa",
+  "dependencies": {
+    "mongodb": "^3.0.1"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

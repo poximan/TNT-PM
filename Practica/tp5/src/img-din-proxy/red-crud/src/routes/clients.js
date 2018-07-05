@@ -1,7 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var MongoClient = require("mongodb").MongoClient;
-var valores_iniciales = require("../db/clients.json");
+var valores_iniciales = require("../db/init.json");
+
+
+router.all('/', function (req, res, next) {  
+  next(); // proximo controlador
+});
 
 // leer documentos existentes
 router.get('/', function(req, res, next) {
@@ -27,7 +32,7 @@ router.post('/', function(req, res, next) {
 router.put('/', function(req, res, next) {
 
   var ObjectID = require('mongodb').ObjectID;
-  var item = prepareItem(req.body);
+  var item = req.body;
 
   let id = item._id;
   delete item["_id"]
@@ -56,25 +61,13 @@ router.delete('/', function(req, res, next) {
 });
 
 /*
-------------- FUNC AUXILIARES
-*/
-
-var prepareItem = function(source) {
-
-  var result = source;
-  result.superuser = source.superuser === 'true' ? true : false;
-  result.access = parseInt(source.access, 10);
-  return result;
-};
-
-/*
 ------------- CONEXION A BASE DE DATOS
 */
 
 let conectarBD = new Promise((resolve, reject) => {
   MongoClient.connect('mongodb://mongo:27017/', function(err, db) {
     if(err) reject(err);
-    resolve(db.db("mqGate").collection("users"))
+    resolve(db.db("red-proy").collection("proyectos"))
   })
 });
 
@@ -82,11 +75,11 @@ MongoClient.connect('mongodb://mongo:27017/', function(err, db) {
 
   if(err) throw err;
 
-  db = db.db("mqGate")
-  db.collection("users").count({}).then(function(res) {
+  db = db.db("red-proy")
+  db.collection("proyectos").count({}).then(function(res) {
     if(res <= 0)
-      db.collection("users").insertMany(valores_iniciales).then(function(result) {
-        console.log("---> HACIA MONGO ---> usuarios por defecto cargados");
+      db.collection("proyectos").insertMany(valores_iniciales).then(function(result) {
+        console.log("---> HACIA MONGO ---> proyectos por defecto cargados");
       })
   })
 })

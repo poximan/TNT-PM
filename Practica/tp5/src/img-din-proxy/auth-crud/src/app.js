@@ -1,3 +1,5 @@
+var uri_base = require("../propiedades.json").uri_base;
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -19,10 +21,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use("/crud", express.static(path.join(__dirname, 'public')));
+app.use(uri_base, express.static(path.join(__dirname, 'public')));
 
-app.use('/crud', routes);
-app.use('/crud/clients', clients);
+app.use(uri_base, routes);
+app.use(uri_base+"/clients", clients);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
