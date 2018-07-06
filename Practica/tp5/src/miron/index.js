@@ -9,22 +9,26 @@ function mirarBD() {
     if(err) throw err;
     db = db.db("red-proy")
 
-    nuevoNodeRed();
-
-    db.collection("proyectos").find({"proy-generado": false}, { "id-proyecto": 1 } ).toArray(function(err, result) {
+    db.collection("proyectos").findOne({"proy-generado": false}, { "id-proyecto": 1 }, function(err, result_find) {
       if (err) throw err;
-      console.log(result);
+      if (!result_find) return;
+
+      let nuevo_proy = result_find["id-proyecto"];
+      result_find["proy-generado"] = true;
+
+      db.collection("proyectos").updateOne({"id-proyecto": nuevo_proy }, {$set:result_find}, function(err, result_update) {
+        if (err) throw err;
+        nuevoNodeRed(nuevo_proy);
+      });
     });
   })
 }
 
 setInterval(mirarBD, 5000);
-var nombre = 0;
 /*
 docker-compose run -d --name hugosss node-red
 start cmd /K "d: && cd d:\documentos\hugo\git\TNT-PM\Practica\tp5\src && docker-compose run -d node-red"
 */
-nuevoNodeRed = () => {
-  nombre++;
-  shell.execCommand("start " + terminal + " /C \"d: && cd \"" +  path_compose + "\" && docker-compose run -d --name node-red-\"" + nombre.toString() + "\" node-red\"", function (returnvalue) {});
+nuevoNodeRed = (nuevo_proy) => {
+  shell.execCommand("start " + terminal + " /C \"d: && cd \"" +  path_compose + "\" && docker-compose run -d --name node-red-\"" + nuevo_proy + "\" node-red\"", function (returnvalue) {});
 }
