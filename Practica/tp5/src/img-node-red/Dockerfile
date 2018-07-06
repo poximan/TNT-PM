@@ -1,7 +1,6 @@
 FROM node:alpine
 MAINTAINER <poxi_man@yahoo.com>
 
-ENV INSTANCIA "node-red-default"
 RUN apk --update add bash
 
 # creacion de carpetas
@@ -19,6 +18,8 @@ COPY embed/src src
 
 COPY mis-nodos ../mis-nodos
 RUN npm install /home/mis-nodos/node-red-contrib-svg-storage
+
+ENV PROC ""
 
 WORKDIR /home/embed/src
 CMD ["node", "index.js"]

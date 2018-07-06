@@ -4,7 +4,7 @@ var MongoClient = require("mongodb").MongoClient;
 var valores_iniciales = require("../db/init.json");
 
 
-router.all('/', function (req, res, next) {  
+router.all('/', function (req, res, next) {
   next(); // proximo controlador
 });
 
@@ -21,8 +21,9 @@ router.get('/', function(req, res, next) {
 // nuevo documento
 router.post('/', function(req, res, next) {
 
+  let itemMarsh = prepareItem(req.body);
   conectarBD.then((coleccion) => {
-    coleccion.insertOne(req.body, function(err, item) {
+    coleccion.insertOne(itemMarsh, function(err, item) {
       res.json(item);
     });
   });
@@ -59,6 +60,13 @@ router.delete('/', function(req, res, next) {
     });
   });
 });
+
+var prepareItem = function(source) {
+
+  var result = source;
+  result["proy-generado"] = source["proy-generado"] === 'true' ? true : false;
+  return result;
+};
 
 /*
 ------------- CONEXION A BASE DE DATOS

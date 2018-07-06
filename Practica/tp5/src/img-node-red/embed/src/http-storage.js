@@ -17,7 +17,7 @@ httpStorage.getFlows = function () {
       {
         host: api.HOST,
         port: api.PORT,
-        path: '/api/getFlows'
+        path: '/api/getFlows/' + process.env.PROC
       },
       function (response) {
         var receivedData = "";
@@ -44,7 +44,7 @@ httpStorage.saveFlows = function (flows) {
       const options = {
           host: api.HOST,
           port: api.PORT,
-          path: '/api/saveFlows',
+          path: '/api/saveFlows/' + process.env.PROC,
           method: 'POST',
           headers: { 'Content-Type': 'application/json' }
       };

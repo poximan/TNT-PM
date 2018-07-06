@@ -2,6 +2,7 @@ var http = require('http');
 var express = require("express");
 var RED = require("node-red");
 const resolve = require('path').resolve
+let os = require('os')
 
 require("./autenticacion");
 
@@ -10,9 +11,10 @@ var app = express();
 
 console.log("Express: Ejecutando server en " + resolve().toString());
 
+let ruta = "/red-" + process.env.PROC
 // Add a simple route for static content served from 'public'
-app.use("/red/mqtt", express.static(resolve()+"/public"));
-app.get('/red/mqtt', function (req, res, next) {
+app.use(ruta + "/mqtt", express.static(resolve()+"/public"));
+app.get(ruta + "/mqtt", function (req, res, next) {
 
   res.sendFile("index.html", function (err) {
     if (err) {
@@ -26,9 +28,9 @@ var server = http.createServer(app);
 
 // Create the settings object - see default settings.js file for other options
 var settings = {
-    httpAdminRoot:"/red",
-    httpNodeRoot: "/hmi",
-    httpRoot:"/red",
+    httpAdminRoot: ruta,
+    httpNodeRoot: "/hmi-" + process.env.PROC,
+    httpRoot: ruta,
     userDir:"/home/src/.nodered/",
     functionGlobalContext: { },    // enables global context
     storageModule: require("./http-storage"),
@@ -47,4 +49,4 @@ server.listen(8000);
 // Start the runtime
 RED.start();
 
-console.log('Hello ' + process.env.INSTANCIA)
+console.log('Hello ' + process.env.PROC)

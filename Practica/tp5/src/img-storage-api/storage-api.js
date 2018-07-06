@@ -7,7 +7,10 @@ var db_global;
 /*
 ......... GET
 */
-app.get('/api/getFlows/', function (req, res) {
+app.get('/api/getFlows', function (req, res) {
+
+  console.log(req.params);
+
   var coleccion_obj = db_global.collection("colecc_docker");
   var doc = coleccion_obj.findOne( { ultimo: true } );
 

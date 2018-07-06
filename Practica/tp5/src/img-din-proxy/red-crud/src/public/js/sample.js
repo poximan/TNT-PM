@@ -21,6 +21,7 @@ $(function() {
               });
             },
             insertItem: function(item) {
+              item["proy-generado"] = false;
               return $.ajax({
                 type: "POST",
                 url: "./clients",
