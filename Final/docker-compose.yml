@@ -1,0 +1,30 @@
+version: '2'
+services:
+
+  node-red:
+    build: ./img-node-red/
+    volumes:
+      - ./img-node-red/mis-nodos/:/home/mis-nodos/
+      - ./img-node-red/embed/src/:/home/embed/src/
+    #ports: # huesped:anfitrion
+    #  - "9229:9229"
+    depends_on:
+      - storage-api
+      - mqtt
+    ports: # huesped:anfitrion
+      - "8000:8000"
+
+  # api para almacenar flows en mongo
+  storage-api:
+    build: ./img-storage-api/
+    depends_on:
+      - mongo
+
+  # broker de mensajes mqtt
+  mqtt:
+    build: ./img-mqtt-auth/
+
+  mongo:
+    image: mongo
+    ports: # huesped:anfitrion
+      - "27017:27017"

@@ -1,0 +1,82 @@
+<script type="text/javascript">
+
+  RED.nodes.registerType("svg-storage", {
+    category: 'function',
+    color: '#a6bbcf',
+    defaults: {
+      cantidad: { value: 0 }
+    },
+    inputs:1,
+    outputs:1,
+    icon: "icon-upload.png",
+    label: function() {
+      return this.name || "svg-storage";
+    },
+    oneditsave: function() {
+
+      let defaults = RED.nodes.registry.getNodeType("svg-storage").defaults;
+
+      var i = 0;
+      for (
+        var nombre, contenido ;
+
+        (nombre = document.getElementById("node-input-archivo_nombre_"+i) != null) &&
+        (contenido = document.getElementById("node-input-archivo_contenido_"+i) != null) ;
+
+        i++) {
+          defaults["archivo_nombre_"+i] = {value: nombre.value};
+          defaults["archivo_contenido_"+i] = {value: contenido.value};
+        }
+      document.getElementById("node-input-cantidad").value = i;
+    }
+  });
+
+</script>
+
+<script type="text/x-red" data-template-name="svg-storage">
+  <div class="form-row" id="form-archiv">
+    <label for="carga-archivo"> Seleccione archivo </label>
+    <input type="file" id="carga-archivo" onchange="handleFileSelect(this.files)" accept="image/svg+xml" multiple/>
+
+    <input type="hidden" id="node-input-cantidad" >
+    <output id="list"> </output>
+
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="svg-storage">
+  <p> Cargador de archivos </p>
+</script>
+
+<script>
+  function handleFileSelect(archivos) {
+
+    var visual_output = [];
+
+    for (var i = 0, f; f = archivos[i]; i++){
+
+      var el_name = "<input type=hidden id=node-input-archivo_nombre_" + i + " > </input>";
+      $("#form-archiv").append(el_name);
+      var el_value = "<input type=hidden id=node-input-archivo_contenido_" + i + " > </input>";
+      $("#form-archiv").append(el_value);
+
+      var reader = new FileReader();
+
+      reader.onload = (function (f, i) {
+        return function (progress) {
+          var content = progress.currentTarget.result;
+
+          document.getElementById("node-input-archivo_nombre_"+i).value = f.name;
+          document.getElementById("node-input-archivo_contenido_"+i).value = content;
+        };
+      })(f, i);
+      // read in the image file as a data.
+      reader.readAsText(f);
+
+      visual_output.push('<li><strong>', encodeURI(f.name), '</strong>',
+      ' - ', f.size, ' bytes', '</li>');
+    }
+
+    document.getElementById('list').innerHTML = '<ul>' + visual_output.join('') + '</ul>';
+  }
+</script>

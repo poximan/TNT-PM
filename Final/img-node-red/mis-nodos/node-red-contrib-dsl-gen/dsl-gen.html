@@ -1,0 +1,32 @@
+<script type="text/javascript">
+
+  RED.nodes.registerType("dsl-gen", {
+
+    category: 'function',
+    color: '#a6bbcf',
+    defaults: {
+    },
+    inputs:1,
+    outputs:1,
+    icon: "bnf.png",
+
+    label: function() {
+      return this.name || "dsl-gen";
+    },
+    oneditsave: function() {
+      let defaults = RED.nodes.registry.getNodeType("dsl-gen").defaults;
+    }
+  });
+
+</script>
+
+<script type="text/x-red" data-template-name="dsl-gen">
+  <div class="form-row">
+
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="dsl-gen">
+  <p> provee una forma de generar estilos de nodos, cambios de atributos o texto interno a partir de expresiones </p>
+  <p> Estas se defininen como un DSL </p>
+</script>
