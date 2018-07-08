@@ -6,26 +6,14 @@ let os = require('os')
 
 require("./autenticacion");
 
-// Create an Express app
-var app = express();
-
 console.log("Express: Ejecutando server en " + resolve().toString());
 
-let ruta = "/red"
-
-// Add a simple route for static content served from 'public'
-app.use(ruta + "/mqtt", express.static(resolve()+"/public"));
-app.get(ruta + "/mqtt", function (req, res, next) {
-
-  res.sendFile("index.html", function (err) {
-    if (err) {
-      next(err);
-    }
-  });
-});
-
+// Create an Express app
+var app = express();
 // Create a server
 var server = http.createServer(app);
+
+let ruta = "/red"
 
 // Create the settings object - see default settings.js file for other options
 var settings = {

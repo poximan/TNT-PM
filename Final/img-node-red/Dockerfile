@@ -14,9 +14,16 @@ RUN npm install node-red-dashboard
 WORKDIR /home/embed
 ADD embed/package.json ./
 RUN npm install
-COPY embed/src src
 
+COPY embed/src src
 COPY mis-nodos ../mis-nodos
+
+# instalar dependencias del nodo
+WORKDIR /home/mis-nodos/node-red-contrib-dsl-gen
+RUN npm install
+
+# crear los links simbolicos
+WORKDIR /home/embed
 RUN npm install /home/mis-nodos/node-red-contrib-svg-storage
 RUN npm install /home/mis-nodos/node-red-contrib-dsl-gen
 

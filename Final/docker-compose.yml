@@ -3,14 +3,10 @@ services:
 
   node-red:
     build: ./img-node-red/
-    volumes:
-      - ./img-node-red/mis-nodos/:/home/mis-nodos/
-      - ./img-node-red/embed/src/:/home/embed/src/
     #ports: # huesped:anfitrion
     #  - "9229:9229"
     depends_on:
       - storage-api
-      - mqtt
     ports: # huesped:anfitrion
       - "8000:8000"
 

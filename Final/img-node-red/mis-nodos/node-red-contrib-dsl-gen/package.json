@@ -1,12 +1,18 @@
 {
   "name": "node-red-contrib-dsl-gen",
   "version": "1.0.0",
-  "description": "tp3",
+  "description": "final tnt",
   "main": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "node-red" : {
+  "dependencies": {
+    "js-pattern-matching": "^0.2.0"
+  },
+  "keywords": [
+    "node-red"
+  ],
+  "node-red": {
     "nodes": {
       "dsl-gen": "dsl-gen.js"
     }

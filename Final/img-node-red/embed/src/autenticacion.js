@@ -1,4 +1,4 @@
-var MongoClient = require("mongodb").MongoClient;
+const { MongoClient } = require("mongodb");
 var http = require('http');
 var express = require("express");
 
@@ -60,9 +60,17 @@ server.listen(8089);
 /*
 ......... PERSISTENCIA
 */
-MongoClient.connect('mongodb://mongo:27017/', function(err, db) {
+const uri = 'mongodb://mongo:27017';  // mongodb://localhost - will fail
 
-  if(err) throw err;
-  db = db.db("mqGate")
-  db.collection("users").find();
-})
+(async function() {
+  try {
+
+    const client = await MongoClient.connect(uri,{ useNewUrlParser: true })
+    client.db("mqGate").collection("users").find()
+
+    client.close();
+  } catch(e) {
+    console.error(e)
+  }
+
+})()

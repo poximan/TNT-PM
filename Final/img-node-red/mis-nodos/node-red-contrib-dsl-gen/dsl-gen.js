@@ -1,3 +1,5 @@
+var match = require('js-pattern-matching');
+
 module.exports = function(RED) {
 
   function DSLGen(config) {
@@ -8,25 +10,31 @@ module.exports = function(RED) {
 
     var node = this;
 
+    /*
+    ------- MENSAJE ENTRANTE
+    */
     this.on('input', function(msg) {
 
       if (msg.topic != undefined ){
 
-        console.log("WS - msg mqtt orig -> %s", JSON.stringify(msg));
-
         msg.topic = trimBarras(msg.topic)
         let tag = toTag(msg.topic)
 
+        // salvar el valor y reescribir el payload
         let valor = msg.payload
         msg.payload = {}
         msg.payload[tag] = valor
 
-        console.log("WS - msg mqtt transf -> %s", JSON.stringify(msg));
+        const formula = getFormula(tag)
+        console.log(formula);
       }
 
       node.send(msg);
     });
 
+    /*
+    ------- MENSAJE SALIENTE
+    */
     this.on('output', function(msg) {
 
       console.log("saliendo -> %s", JSON.stringify(msg));
@@ -41,31 +49,44 @@ module.exports = function(RED) {
 
       done();
     })
+  }
 
-    trimBarras = (topico) => {
+  /*
+  ------- PATTERN-MATCH
+  */
+  const getFormula = (value) =>  match (value) (
+    (v= "PM_IPA_CENTRIFUGADO_MARCHA") => "func1",
+    (v= "PM_IPA_FERMENTACION_PRESION") => "func2",
+    (v= undefined) => "An undefined value",
+    (v= null) => "A null value"
+  )
 
-      if(topico.startsWith("/"))
-        topico = topico.slice(1)
+  /*
+  ------- FUNC AUXILIARES
+  */
+  trimBarras = (topico) => {
 
-      if(topico.endsWith("/"))
-        topico = topico.slice(0, -1)
+    if(topico.startsWith("/"))
+      topico = topico.slice(1)
 
-      return topico;
-    }
+    if(topico.endsWith("/"))
+      topico = topico.slice(0, -1)
 
-    toTag = (topico) => {
+    return topico;
+  }
 
-      /*
-      obtener los simbolos del lenguaje
-      let simbolos = topico.split("/")
-      */
+  toTag = (topico) => {
 
-      /*
-      transformar el direccionamiento arbol a tag plano
-      */
-      let tag = topico.replace(/\//g, "_")
-      return tag.toUpperCase()
-    }
+    /*
+    obtener los simbolos del lenguaje
+    let simbolos = topico.split("/")
+    */
+
+    /*
+    transformar el direccionamiento arbol a tag plano
+    */
+    let tag = topico.replace(/\//g, "_")
+    return tag.toUpperCase()
   }
 
   RED.nodes.registerType("dsl-gen", DSLGen);
