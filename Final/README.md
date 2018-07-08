@@ -1,4 +1,4 @@
-# Trabajo Práctico Final - Taller de Nuevas Tecnologias - UNPSJB
+# Trabajo Práctico Final - TNT - UNPSJB
 
 ## Notas
 Los trabajos se asignarán de manera individual.

@@ -17,16 +17,16 @@ module.exports = function(RED) {
 
       if (msg.topic != undefined ){
 
-        msg.topic = trimBarras(msg.topic)
-        let tag = toTag(msg.topic)
+        let topico = trimBarras(msg.topic)
+        let tag = toTag(topico)
 
         // salvar el valor y reescribir el payload
         let valor = msg.payload
         msg.payload = {}
         msg.payload[tag] = valor
 
-        const formula = getFormula(tag)
-        console.log(formula);
+        const formula = lexemas(tag)
+        gramatica[formula](msg)
       }
 
       node.send(msg);
@@ -54,12 +54,31 @@ module.exports = function(RED) {
   /*
   ------- PATTERN-MATCH
   */
-  const getFormula = (value) =>  match (value) (
+  const lexemas = (value) =>  match (value) (
     (v= "PM_IPA_CENTRIFUGADO_MARCHA") => "func1",
     (v= "PM_IPA_FERMENTACION_PRESION") => "func2",
-    (v= undefined) => "An undefined value",
-    (v= null) => "A null value"
+    (v= undefined) => "funcErr",
+    (v= null) => "funcErr"
   )
+
+  var gramatica = {
+    func1: (msg) => {
+      console.log("ejecutando func1");
+
+      console.log("topico -> " + msg.topic);
+      console.log("payload -> " + JSON.stringify(msg.payload));
+    },
+    func2: (msg) => {
+      console.log("ejecutando func2");
+
+      console.log("topico -> " + msg.topic);
+      console.log("payload -> " + JSON.stringify(msg.payload));
+    },
+    funcErr: (msg) => {
+      console.log("ejecutando funcErr");
+      console.log("expresion desconocida para esta gramatica");
+    }
+  }
 
   /*
   ------- FUNC AUXILIARES
