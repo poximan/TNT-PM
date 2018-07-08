@@ -1,4 +1,4 @@
-FROM jllopis/mosquitto
+FROM jllopis/mosquitto:v1.4.12
 MAINTAINER <poxi_man@yahoo.com>
 
 RUN apk --update add bash
