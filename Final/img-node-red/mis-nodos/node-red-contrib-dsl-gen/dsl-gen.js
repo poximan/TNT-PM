@@ -1,4 +1,6 @@
-var match = require('js-pattern-matching');
+var match = require('js-pattern-matching')
+var Excel = require("exceljs")
+const { resolve } = require('path')
 
 module.exports = function(RED) {
 
@@ -64,9 +66,17 @@ module.exports = function(RED) {
   var gramatica = {
     func1: (msg) => {
       console.log("ejecutando func1");
+      console.log(resolve());
+      // read from a file
+      var workbook = new Excel.Workbook();
+      workbook.xlsx.readFile("dominio/formulas.xlsx")
+          .then(function() {
 
-      console.log("topico -> " + msg.topic);
-      console.log("payload -> " + JSON.stringify(msg.payload));
+            var worksheet = workbook.getWorksheet("Hoja1");
+            var idCol = worksheet.getColumn('A')
+
+            console.log(idCol);
+          });
     },
     func2: (msg) => {
       console.log("ejecutando func2");

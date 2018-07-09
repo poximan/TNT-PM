@@ -9,6 +9,8 @@ services:
       - storage-api
     ports: # huesped:anfitrion
       - "8000:8000"
+    volumes:
+      - ./dominio/:/home/embed/src/dominio/
 
   # api para almacenar flows en mongo
   storage-api:
