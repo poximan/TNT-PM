@@ -19,13 +19,9 @@ module.exports = function(RED) {
 
       if (msg.topic != undefined ){
 
-        let topico = trimBarras(msg.topic)
-        let tag = toTag(topico)
-
-        // salvar el valor y reescribir el payload
-        let valor = msg.payload
-        msg.payload = {}
-        msg.payload[tag] = valor
+        let tag = toTag(msg.topic)
+        let valor = msg.payload;
+        msg.payload = { tag, valor }
 
         const formula = lexemas(tag)
         gramatica[formula](msg)
@@ -57,32 +53,47 @@ module.exports = function(RED) {
   ------- PATTERN-MATCH
   */
   const lexemas = (value) =>  match (value) (
-    (v= "PM_IPA_CENTRIFUGADO_MARCHA") => "func1",
-    (v= "PM_IPA_FERMENTACION_PRESION") => "func2",
+    (v= "PM_IPA_CENTRIFUGADO_MARCHA") => "buscarEnPlanilla",
+    (v= "PM_IPA_FERMENTACION_PRESION") => "buscarEnPlanilla",
     (v= undefined) => "funcErr",
     (v= null) => "funcErr"
   )
 
   var gramatica = {
-    func1: (msg) => {
-      console.log("ejecutando func1");
-      console.log(resolve());
-      // read from a file
-      var workbook = new Excel.Workbook();
-      workbook.xlsx.readFile("dominio/formulas.xlsx")
-          .then(function() {
+    buscarEnPlanilla: (msg) => {
 
-            var worksheet = workbook.getWorksheet("Hoja1");
-            var idCol = worksheet.getColumn('A')
+      new Promise((resolve, reject) => {
 
-            console.log(idCol);
-          });
-    },
-    func2: (msg) => {
-      console.log("ejecutando func2");
+        var workbook = new Excel.Workbook();
+        workbook.xlsx.readFile("dominio/formulas.xlsx")
+        .then(function() {
 
-      console.log("topico -> " + msg.topic);
-      console.log("payload -> " + JSON.stringify(msg.payload));
+          var worksheet = workbook.getWorksheet(1);
+
+          worksheet.getColumn('A')
+          .eachCell({ includeEmpty: false }, function(cell, rowNumber) {
+            if(msg.payload.tag == cell.value){
+
+              var row = worksheet.getRow(rowNumber)
+
+              if(msg.payload.valor === "true" || msg.payload.valor === "false")
+                msg.payload.valor = (msg.payload.valor === "true")? 1 : 0;
+
+              row.getCell('B').value = parseFloat(msg.payload.valor)
+              let ref = row.getCell('C').value
+              let formula = row.getCell('D').value.formula
+              let attr = row.getCell('F').value              
+
+              console.log(ref + " " + formula + " " + attr);
+              row.commit()
+            }
+          })
+          resolve(workbook)
+        })
+      })
+      .then((workbook) => {
+        workbook.xlsx.writeFile("dominio/formulas.xlsx")
+      })
     },
     funcErr: (msg) => {
       console.log("ejecutando funcErr");
@@ -93,29 +104,19 @@ module.exports = function(RED) {
   /*
   ------- FUNC AUXILIARES
   */
-  trimBarras = (topico) => {
-
-    if(topico.startsWith("/"))
-      topico = topico.slice(1)
-
-    if(topico.endsWith("/"))
-      topico = topico.slice(0, -1)
-
-    return topico;
-  }
-
   toTag = (topico) => {
 
-    /*
-    obtener los simbolos del lenguaje
-    let simbolos = topico.split("/")
-    */
+    topico= trimBarras(topico)
+    topico = topico.replace(/\//g, "_")
+    return topico.toUpperCase()
+  }
 
-    /*
-    transformar el direccionamiento arbol a tag plano
-    */
-    let tag = topico.replace(/\//g, "_")
-    return tag.toUpperCase()
+  trimBarras = (topico) => {
+    if(topico.startsWith("/"))
+      topico = topico.slice(1)
+    if(topico.endsWith("/"))
+      topico = topico.slice(0, -1)
+    return topico;
   }
 
   RED.nodes.registerType("dsl-gen", DSLGen);
