@@ -4,6 +4,8 @@ const { resolve } = require('path')
 
 module.exports = function(RED) {
 
+  const OPER_IF = /^IF\((\w\d)(=|>|<|>=|<=|<>)(\w\d),\"(.+)\",\"(.+)\"\)$/;
+
   function DSLGen(config) {
 
     RED.nodes.createNode(this, config);
@@ -21,22 +23,24 @@ module.exports = function(RED) {
 
         let tag = toTag(msg.topic)
         let valor = msg.payload;
-        msg.payload = { tag, valor }
+        msg.payload = { tag, attr: "", valor }
 
         const formula = lexemas(tag)
-        gramatica[formula](msg)
+        gramatica[formula](msg, (valores) => {
+
+          this.valores = valores
+
+          valores.forEach(function(xls_fila) {
+            if(OPER_IF.test(xls_fila.formula)){
+              let partes = OPER_IF.exec(xls_fila.formula)
+
+              msg.payload.valor = operadores[partes[2]](xls_fila.B, xls_fila.C, partes[4], partes[5])
+              msg.payload.attr = xls_fila.attr
+              node.send(msg);
+            }
+          });
+        })
       }
-
-      node.send(msg);
-    });
-
-    /*
-    ------- MENSAJE SALIENTE
-    */
-    this.on('output', function(msg) {
-
-      console.log("saliendo -> %s", JSON.stringify(msg));
-      node.send(msg);
     });
 
     this.on("close", (removed, done) => {
@@ -53,15 +57,16 @@ module.exports = function(RED) {
   ------- PATTERN-MATCH
   */
   const lexemas = (value) =>  match (value) (
-    (v= "PM_IPA_CENTRIFUGADO_MARCHA") => "buscarEnPlanilla",
-    (v= "PM_IPA_FERMENTACION_PRESION") => "buscarEnPlanilla",
-    (v= undefined) => "funcErr",
-    (v= null) => "funcErr"
+    (v= "PM_IPA_CENTRIFUGADO_MARCHA") => "existe",
+    (v= "PM_IPA_FERMENTACION_PRESION") => "existe",
+    (v= undefined) => "error",
+    (v= null) => "error"
   )
 
-  var gramatica = {
-    buscarEnPlanilla: (msg) => {
+  const gramatica = {
+    existe: (msg, cb) => {
 
+      var valores = []
       new Promise((resolve, reject) => {
 
         var workbook = new Excel.Workbook();
@@ -80,11 +85,14 @@ module.exports = function(RED) {
                 msg.payload.valor = (msg.payload.valor === "true")? 1 : 0;
 
               row.getCell('B').value = parseFloat(msg.payload.valor)
-              let ref = row.getCell('C').value
-              let formula = row.getCell('D').value.formula
-              let attr = row.getCell('F').value              
 
-              console.log(ref + " " + formula + " " + attr);
+              valores.push({
+                tag: msg.payload.tag,
+                B: row.getCell('B').value,
+                C: row.getCell('C').value,
+                formula: row.getCell('D').value.formula,
+                attr: row.getCell('F').value
+              })
               row.commit()
             }
           })
@@ -93,11 +101,33 @@ module.exports = function(RED) {
       })
       .then((workbook) => {
         workbook.xlsx.writeFile("dominio/formulas.xlsx")
+        cb(valores)
       })
     },
-    funcErr: (msg) => {
+    error: (msg) => {
       console.log("ejecutando funcErr");
       console.log("expresion desconocida para esta gramatica");
+    }
+  }
+
+  const operadores = {
+    '>': function(a, b, ret_v, ret_f) {
+      return (a > b)? ret_v : ret_f
+    },
+    '<': function(a, b, ret_v, ret_f) {
+      return (a < b)? ret_v : ret_f
+    },
+    '<=': function(a, b, ret_v, ret_f) {
+      return (a <= b)? ret_v : ret_f
+    },
+    '>=': function(a, b, ret_v, ret_f) {
+      return (a >= b)? ret_v : ret_f
+    },
+    '=': function(a, b, ret_v, ret_f) {
+      return (a == b)? ret_v : ret_f
+    },
+    '<>': function(a, b, ret_v, ret_f) {
+      return (a != b)? ret_v : ret_f
     }
   }
 
@@ -106,15 +136,15 @@ module.exports = function(RED) {
   */
   toTag = (topico) => {
 
-    topico= trimBarras(topico)
+    topico= trimChar(topico, "/")
     topico = topico.replace(/\//g, "_")
     return topico.toUpperCase()
   }
 
-  trimBarras = (topico) => {
-    if(topico.startsWith("/"))
+  trimChar = (topico, char) => {
+    if(topico.startsWith(char))
       topico = topico.slice(1)
-    if(topico.endsWith("/"))
+    if(topico.endsWith(char))
       topico = topico.slice(0, -1)
     return topico;
   }
