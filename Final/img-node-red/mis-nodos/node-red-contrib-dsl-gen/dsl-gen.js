@@ -1,10 +1,9 @@
 var match = require('js-pattern-matching')
 var Excel = require("exceljs")
 const { resolve } = require('path')
+const { evaluar } = require('./gramatica');
 
 module.exports = function(RED) {
-
-  const OPER_IF = /^IF\((\w\d)(=|>|<|>=|<=|<>)(\w\d),\"(.+)\",\"(.+)\"\)$/;
 
   function DSLGen(config) {
 
@@ -28,20 +27,17 @@ module.exports = function(RED) {
         const formula = lexemas(tag)
         gramatica[formula](msg, (valores) => {
 
-          this.valores = valores
-
           valores.forEach(function(xls_fila) {
-            if(OPER_IF.test(xls_fila.formula)){
-              let partes = OPER_IF.exec(xls_fila.formula)
 
-              msg.payload.valor = operadores[partes[2]](xls_fila.B, xls_fila.C, partes[4], partes[5])
-              msg.payload.attr = xls_fila.attr
-              node.send(msg);
-            }
-          });
+            evaluar(xls_fila, (valor, attr) => {
+              msg.payload.valor = valor
+              msg.payload.attr = attr
+              node.send(msg)
+            })
+          })
         })
       }
-    });
+    })
 
     this.on("close", (removed, done) => {
       if(removed)
@@ -107,27 +103,6 @@ module.exports = function(RED) {
     error: (msg) => {
       console.log("ejecutando funcErr");
       console.log("expresion desconocida para esta gramatica");
-    }
-  }
-
-  const operadores = {
-    '>': function(a, b, ret_v, ret_f) {
-      return (a > b)? ret_v : ret_f
-    },
-    '<': function(a, b, ret_v, ret_f) {
-      return (a < b)? ret_v : ret_f
-    },
-    '<=': function(a, b, ret_v, ret_f) {
-      return (a <= b)? ret_v : ret_f
-    },
-    '>=': function(a, b, ret_v, ret_f) {
-      return (a >= b)? ret_v : ret_f
-    },
-    '=': function(a, b, ret_v, ret_f) {
-      return (a == b)? ret_v : ret_f
-    },
-    '<>': function(a, b, ret_v, ret_f) {
-      return (a != b)? ret_v : ret_f
     }
   }
 
