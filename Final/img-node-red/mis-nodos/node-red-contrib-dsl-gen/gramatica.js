@@ -2,13 +2,18 @@ const OPER_IF = /^IF\((\w\d)(=|>|<|>=|<=|<>)(\w\d),\"(.+)\",\"(.+)\"\)$/;
 
 evaluar = (xls_fila, cb) => {
 
-  if(OPER_IF.test(xls_fila.formula)){
-    let partes = OPER_IF.exec(xls_fila.formula)
+  if(OPER_IF.test(xls_fila.formula))
+    transformar(OPER_IF, xls_fila, (valor, attr) => {
+      cb(valor, attr)
+    })
+}
 
-    const valor = operadores[partes[2]](xls_fila.B, xls_fila.C, partes[4], partes[5])
-    const attr = xls_fila.attr
-    cb(valor, attr)
-  }
+transformar = (EXP_REG, xls_fila, cb) => {
+
+  let partes = EXP_REG.exec(xls_fila.formula)
+  const valor = operadores[partes[2]](xls_fila.B, xls_fila.C, partes[4], partes[5])
+  const attr = xls_fila.attr
+  cb(valor, attr)
 }
 
 const operadores = {

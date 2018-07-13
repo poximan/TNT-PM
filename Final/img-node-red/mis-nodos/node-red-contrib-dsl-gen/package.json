@@ -8,8 +8,7 @@
   },
   "dependencies": {
     "js-pattern-matching": "^0.2.0",
-    "exceljs": "^1.5.1",
-    "hot-formula-parser": "^3.0.0"
+    "exceljs": "^1.5.1"    
   },
   "keywords": [
     "node-red"
