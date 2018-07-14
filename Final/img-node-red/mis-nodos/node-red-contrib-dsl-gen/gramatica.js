@@ -1,6 +1,6 @@
 const OPER_IF = /^IF\((\w\d)(=|>|<|>=|<=|<>)(\w\d),\"(.+)\",\"(.+)\"\)$/;
 
-evaluar = (xls_fila, cb) => {
+evaluarExpresion = (xls_fila, cb) => {
 
   if(OPER_IF.test(xls_fila.formula))
     transformar(OPER_IF, xls_fila, (valor, attr) => {
@@ -37,4 +37,4 @@ const operadores = {
   }
 }
 
-module.exports.evaluar = evaluar;
+module.exports.evaluarExpresion = evaluarExpresion;
