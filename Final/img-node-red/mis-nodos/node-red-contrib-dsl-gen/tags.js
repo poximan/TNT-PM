@@ -1,4 +1,3 @@
-var match = require('js-pattern-matching')
 var Excel = require("exceljs")
 
 var tags_conocidos = []
