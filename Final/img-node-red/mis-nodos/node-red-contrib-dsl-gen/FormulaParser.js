@@ -5,7 +5,7 @@ var FormulaListener = require('./FormulaListener').FormulaListener;
 var grammarFileName = "Formula.g4";
 
 var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
-    "\u0003\u0011I\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
+    "\u0003\u0011J\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
     "\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007\u0004",
     "\b\t\b\u0004\t\t\t\u0004\n\t\n\u0003\u0002\u0003\u0002\u0003\u0003\u0003",
     "\u0003\u0003\u0003\u0005\u0003\u001a\n\u0003\u0003\u0004\u0003\u0004",
@@ -15,13 +15,13 @@ var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
     "\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0006",
     "\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0007\u0003\u0007",
     "\u0003\u0007\u0003\u0007\u0003\u0007\u0005\u0007?\n\u0007\u0003\b\u0003",
-    "\b\u0003\b\u0003\b\u0003\t\u0003\t\u0003\n\u0003\n\u0003\n\u0002\u0002",
-    "\u000b\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0002\u0004\u0004\u0002",
-    "\u0006\u0006\b\b\u0003\u0002\f\u0011\u0002C\u0002\u0014\u0003\u0002",
-    "\u0002\u0002\u0004\u0019\u0003\u0002\u0002\u0002\u0006-\u0003\u0002",
-    "\u0002\u0002\b/\u0003\u0002\u0002\u0002\n4\u0003\u0002\u0002\u0002\f",
-    ">\u0003\u0002\u0002\u0002\u000e@\u0003\u0002\u0002\u0002\u0010D\u0003",
-    "\u0002\u0002\u0002\u0012F\u0003\u0002\u0002\u0002\u0014\u0015\u0005",
+    "\b\u0003\b\u0003\b\u0003\b\u0003\t\u0003\t\u0003\n\u0003\n\u0003\n\u0002",
+    "\u0002\u000b\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0002\u0004\u0004",
+    "\u0002\u0006\u0006\b\b\u0003\u0002\f\u0011\u0002D\u0002\u0014\u0003",
+    "\u0002\u0002\u0002\u0004\u0019\u0003\u0002\u0002\u0002\u0006-\u0003",
+    "\u0002\u0002\u0002\b/\u0003\u0002\u0002\u0002\n4\u0003\u0002\u0002\u0002",
+    "\f>\u0003\u0002\u0002\u0002\u000e@\u0003\u0002\u0002\u0002\u0010E\u0003",
+    "\u0002\u0002\u0002\u0012G\u0003\u0002\u0002\u0002\u0014\u0015\u0005",
     "\u0004\u0003\u0002\u0015\u0003\u0003\u0002\u0002\u0002\u0016\u001a\u0005",
     "\u0006\u0004\u0002\u0017\u001a\u0005\b\u0005\u0002\u0018\u001a\u0005",
     "\n\u0006\u0002\u0019\u0016\u0003\u0002\u0002\u0002\u0019\u0017\u0003",
@@ -42,9 +42,9 @@ var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
     "\u000e\b\u0002;<\u0007\u0004\u0002\u0002<=\u0005\f\u0007\u0002=?\u0003",
     "\u0002\u0002\u0002>9\u0003\u0002\u0002\u0002>:\u0003\u0002\u0002\u0002",
     "?\r\u0003\u0002\u0002\u0002@A\u0005\u0010\t\u0002AB\u0005\u0012\n\u0002",
-    "BC\u0005\u0010\t\u0002C\u000f\u0003\u0002\u0002\u0002DE\t\u0002\u0002",
-    "\u0002E\u0011\u0003\u0002\u0002\u0002FG\t\u0003\u0002\u0002G\u0013\u0003",
-    "\u0002\u0002\u0002\u0005\u0019->"].join("");
+    "BC\u0005\u0010\t\u0002CD\b\b\u0001\u0002D\u000f\u0003\u0002\u0002\u0002",
+    "EF\t\u0002\u0002\u0002F\u0011\u0003\u0002\u0002\u0002GH\t\u0003\u0002",
+    "\u0002H\u0013\u0003\u0002\u0002\u0002\u0005\u0019->"].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -653,6 +653,7 @@ FormulaParser.prototype.comparacion = function() {
         this.operador();
         this.state = 64;
         this.operando();
+         console.log((Number)$1); console.log((Number)$3)); 
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -715,7 +716,7 @@ FormulaParser.prototype.operando = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 66;
+        this.state = 67;
         _la = this._input.LA(1);
         if(!(_la===FormulaParser.CELDA || _la===FormulaParser.LITERAL)) {
         this._errHandler.recoverInline(this);
@@ -802,7 +803,7 @@ FormulaParser.prototype.operador = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 68;
+        this.state = 69;
         _la = this._input.LA(1);
         if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << FormulaParser.MAYOR) | (1 << FormulaParser.MENOR) | (1 << FormulaParser.MAYOR_IGUAL) | (1 << FormulaParser.MENOR_IGUAL) | (1 << FormulaParser.IGUAL) | (1 << FormulaParser.DISTINTO))) !== 0))) {
         this._errHandler.recoverInline(this);
