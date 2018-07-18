@@ -653,7 +653,7 @@ FormulaParser.prototype.comparacion = function() {
         this.operador();
         this.state = 64;
         this.operando();
-         console.log((Number)$1); console.log((Number)$3)); 
+         console.log((Number)$1); console.log((Number)$3); 
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
