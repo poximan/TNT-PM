@@ -603,11 +603,17 @@ function ComparacionContext(parser, parent, invokingState) {
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
     this.ruleIndex = FormulaParser.RULE_comparacion;
+    this.pri = null; // OperandoContext
+    this.seg = null; // OperandoContext
     return this;
 }
 
 ComparacionContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
 ComparacionContext.prototype.constructor = ComparacionContext;
+
+ComparacionContext.prototype.operador = function() {
+    return this.getTypedRuleContext(OperadorContext,0);
+};
 
 ComparacionContext.prototype.operando = function(i) {
     if(i===undefined) {
@@ -618,10 +624,6 @@ ComparacionContext.prototype.operando = function(i) {
     } else {
         return this.getTypedRuleContext(OperandoContext,i);
     }
-};
-
-ComparacionContext.prototype.operador = function() {
-    return this.getTypedRuleContext(OperadorContext,0);
 };
 
 ComparacionContext.prototype.enterRule = function(listener) {
@@ -648,12 +650,12 @@ FormulaParser.prototype.comparacion = function() {
     try {
         this.enterOuterAlt(localctx, 1);
         this.state = 62;
-        this.operando();
+        localctx.pri = this.operando();
         this.state = 63;
         this.operador();
         this.state = 64;
-        this.operando();
-         console.log($1); console.log($3); 
+        localctx.seg = this.operando();
+         console.log((localctx.pri===null ? null : this._input.getText(new antlr4.Interval(localctx.pri.start,localctx.pri.stop)))); console.log((localctx.seg===null ? null : this._input.getText(new antlr4.Interval(localctx.seg.start,localctx.seg.stop)))); 
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
