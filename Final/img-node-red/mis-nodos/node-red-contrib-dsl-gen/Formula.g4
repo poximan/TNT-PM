@@ -23,7 +23,7 @@ condicional : comparacion
 						| comparacion ',' condicional
 						;
 
-comparacion	: operando operador operando		{ console.log((Number)$1); console.log((Number)$3); }
+comparacion	: operando operador operando		{ console.log($1); console.log($3); }
 						;
 
 operando		: CELDA
