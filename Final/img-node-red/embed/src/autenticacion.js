@@ -60,7 +60,7 @@ server.listen(8089);
 /*
 ......... PERSISTENCIA
 */
-const uri = 'mongodb://mongo:27017';  // mongodb://localhost - will fail
+const uri = 'mongodb://mongo:27017';
 
 (async function() {
   try {

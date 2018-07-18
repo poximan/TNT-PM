@@ -1,11 +1,17 @@
+const { procesar } = require("./antlr")
+
 const OPER_IF = /^IF\((\w\d)(=|>|<|>=|<=|<>)(\w\d),\"(.+)\",\"(.+)\"\)$/;
 
 evaluarExpresion = (xls_fila, cb) => {
 
+  console.log(xls_fila.formula);
+  procesar(xls_fila.formula)
+
+  /*
   if(OPER_IF.test(xls_fila.formula))
     transformar(OPER_IF, xls_fila, (valor, attr) => {
       cb(valor, attr)
-    })
+    }) */  
 }
 
 transformar = (EXP_REG, xls_fila, cb) => {

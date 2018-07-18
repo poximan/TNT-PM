@@ -72,11 +72,18 @@ var listener = app.listen(3000, function(){
 /*
 ......... persistencia
 */
-MongoClient.connect('mongodb://mongo:27017/bd_node_red', function(err, db) {
+const uri = 'mongodb://mongo:27017';
 
-  if(err) throw err;
+(async function() {
+  try {
 
-  var dbase = db.db("bd_node_red");
-  dbase.createCollection("colecc_node_red");
-  db_global = dbase;
-});
+    const client = await MongoClient.connect(uri,{ useNewUrlParser: true })
+    var dbase = client.db("bd_node_red")
+    dbase.createCollection("colecc_node_red");
+    db_global = dbase;
+
+  } catch(e) {
+    console.error(e)
+  }
+
+})()
