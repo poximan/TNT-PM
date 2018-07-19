@@ -13,7 +13,7 @@ function procesar(input) {
   parser.buildParseTrees = true;
   var tree = parser.formula();
   var formula = new FormulaListenerImpl();
-  antlr4.tree.ParseTreeWalker.DEFAULT.walk(formula, tree);
+  antlr4.tree.ParseTreeWalker.DEFAULT.walk(formula, tree);  
 }
 
 exports.procesar = procesar;

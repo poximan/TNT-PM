@@ -3,47 +3,48 @@ grammar Formula;
 /*
  * Parser Rules
  */
-formula			: operacion
+formula 		returns [double value]
+						: operacion
 						;
 
-operacion		: operIf | operOr | operAnd
+operacion 	returns [double value]
+						: operIf		{ console.log($operIf.value);}
+						| operOr
+						| operAnd
 						;
 
-operIf			: IF '(' condicional ',' PALABRA ',' PALABRA ')'
-						| IF '(' operacion ',' PALABRA ',' PALABRA ')'
+operIf 			returns [double value]
+						: IF '(' res=comparacion ',' arg1=PALABRA ',' arg2=PALABRA ')'	{ console.log($res.text) ; ($res.text == true)? $arg1.text : $arg2.text;}
+						| IF '(' operacion ',' arg1=PALABRA ',' arg2=PALABRA ')'		{$value = ($operacion.text)? $arg1.text : $arg2.text;}
 						;
 
-operOr			: OR '(' condicional ')'
+operOr			returns [double value]
+						: OR '(' arg1=comparacion ',' arg2=comparacion ')'	{$value = $arg1.text || $arg2.text;}
 						;
 
-operAnd			: AND '(' condicional ')'
+operAnd			returns [double value]
+						: AND '(' arg1=comparacion ',' arg2=comparacion ')'	{$value = $arg1.text && $arg2.text;}
 						;
 
-condicional : comparacion
-						| comparacion ',' condicional
-						;
-
-comparacion	: pri=operando operador seg=operando		{ console.log($pri.text); console.log($seg.text); }
+comparacion	returns [boolean value]
+						: arg1=operando MAYOR arg2=operando			{$value = $arg1.text > $arg2.text;}
+						| arg1=operando MENOR arg2=operando			{$value = $arg1.text < $arg2.text;}
+						| arg1=operando MAYORI arg2=operando		{$value = $arg1.text >= $arg2.text;}
+						| arg1=operando MENORI arg2=operando		{$value = $arg1.text <= $arg2.text;}
+						| arg1=operando IGUAL arg2=operando			{$value = $arg1.text == $arg2.text;}
+						| arg1=operando DISTINTO arg2=operando	{$value = $arg1.text != $arg2.text;}
 						;
 
 operando		: CELDA
-						| LITERAL
-						;
-
-operador		: MAYOR
-						| MENOR
-						| MAYOR_IGUAL
-						| MENOR_IGUAL
-						| IGUAL
-						| DISTINTO
+						| NUMERO
 						;
 
 /*
  * Lexer Rules
  */
-CELDA				: [A-Z][0-9]						;
-PALABRA			: ["]([a-zA-Z]|' ')+["]	;
-LITERAL			: [0-9]+								;
+CELDA				: [A-Z][0-9]											;
+PALABRA			: ["]([a-zA-Z]|' ')+["]						;
+NUMERO			: ('0'..'9')+ ('.' ('0'..'9')+)?	;
 
 IF					: 'IF'	;
 OR					: 'OR'	;
@@ -51,7 +52,7 @@ AND					: 'AND'	;
 
 MAYOR				: '>'		;
 MENOR				: '<'		;
-MAYOR_IGUAL	: '>='	;
-MENOR_IGUAL	: '<='	;
+MAYORI			: '>='	;
+MENORI			: '<='	;
 IGUAL				: '='		;
 DISTINTO		: '<>'	;

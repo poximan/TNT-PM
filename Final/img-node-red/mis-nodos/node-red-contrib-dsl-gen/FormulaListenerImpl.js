@@ -11,37 +11,67 @@ FormulaListenerImpl = function() {
 FormulaListenerImpl.prototype = Object.create(FormulaListener.prototype);
 FormulaListenerImpl.prototype.constructor = FormulaListenerImpl;
 
+// Enter a parse tree produced by FormulaParser#formula.
+FormulaListener.prototype.enterFormula = function(ctx) {
+};
+
+// Exit a parse tree produced by FormulaParser#formula.
+FormulaListener.prototype.exitFormula = function(ctx) {
+};
+
+
+// Enter a parse tree produced by FormulaParser#operacion.
+FormulaListener.prototype.enterOperacion = function(ctx) {
+};
+
+// Exit a parse tree produced by FormulaParser#operacion.
+FormulaListener.prototype.exitOperacion = function(ctx) {
+};
+
+
 // Enter a parse tree produced by FormulaParser#operIf.
 FormulaListener.prototype.enterOperIf = function(ctx) {
-  console.log("entrando if!!!");
 };
 
 // Exit a parse tree produced by FormulaParser#operIf.
 FormulaListener.prototype.exitOperIf = function(ctx) {
-  console.log("saliendo if!!!");  
 };
+
 
 // Enter a parse tree produced by FormulaParser#operOr.
 FormulaListener.prototype.enterOperOr = function(ctx) {
-  console.log("entrando or!!!");
 };
 
 // Exit a parse tree produced by FormulaParser#operOr.
 FormulaListener.prototype.exitOperOr = function(ctx) {
-  console.log("saliendo or!!!");
 };
 
 
 // Enter a parse tree produced by FormulaParser#operAnd.
 FormulaListener.prototype.enterOperAnd = function(ctx) {
-  console.log("entrando and!!!");
 };
 
 // Exit a parse tree produced by FormulaParser#operAnd.
 FormulaListener.prototype.exitOperAnd = function(ctx) {
-  console.log("saliendo and!!!");
 };
 
+
+// Enter a parse tree produced by FormulaParser#comparacion.
+FormulaListener.prototype.enterComparacion = function(ctx) {
+};
+
+// Exit a parse tree produced by FormulaParser#comparacion.
+FormulaListener.prototype.exitComparacion = function(ctx) {
+};
+
+
+// Enter a parse tree produced by FormulaParser#operando.
+FormulaListener.prototype.enterOperando = function(ctx) {
+};
+
+// Exit a parse tree produced by FormulaParser#operando.
+FormulaListener.prototype.exitOperando = function(ctx) {
+};
 
 
 exports.FormulaListenerImpl = FormulaListenerImpl;

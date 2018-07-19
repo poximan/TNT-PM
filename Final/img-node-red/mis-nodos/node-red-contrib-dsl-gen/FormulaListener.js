@@ -56,15 +56,6 @@ FormulaListener.prototype.exitOperAnd = function(ctx) {
 };
 
 
-// Enter a parse tree produced by FormulaParser#condicional.
-FormulaListener.prototype.enterCondicional = function(ctx) {
-};
-
-// Exit a parse tree produced by FormulaParser#condicional.
-FormulaListener.prototype.exitCondicional = function(ctx) {
-};
-
-
 // Enter a parse tree produced by FormulaParser#comparacion.
 FormulaListener.prototype.enterComparacion = function(ctx) {
 };
@@ -80,15 +71,6 @@ FormulaListener.prototype.enterOperando = function(ctx) {
 
 // Exit a parse tree produced by FormulaParser#operando.
 FormulaListener.prototype.exitOperando = function(ctx) {
-};
-
-
-// Enter a parse tree produced by FormulaParser#operador.
-FormulaListener.prototype.enterOperador = function(ctx) {
-};
-
-// Exit a parse tree produced by FormulaParser#operador.
-FormulaListener.prototype.exitOperador = function(ctx) {
 };
 
 
