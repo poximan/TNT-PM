@@ -20,12 +20,12 @@ FormulaListener.prototype.exitFormula = function(ctx) {
 };
 
 
-// Enter a parse tree produced by FormulaParser#operacion.
-FormulaListener.prototype.enterOperacion = function(ctx) {
+// Enter a parse tree produced by FormulaParser#operLogico.
+FormulaListener.prototype.enterOperLogico = function(ctx) {
 };
 
-// Exit a parse tree produced by FormulaParser#operacion.
-FormulaListener.prototype.exitOperacion = function(ctx) {
+// Exit a parse tree produced by FormulaParser#operLogico.
+FormulaListener.prototype.exitOperLogico = function(ctx) {
 };
 
 
@@ -62,6 +62,60 @@ FormulaListener.prototype.enterComparacion = function(ctx) {
 
 // Exit a parse tree produced by FormulaParser#comparacion.
 FormulaListener.prototype.exitComparacion = function(ctx) {
+};
+
+
+// Enter a parse tree produced by FormulaParser#mayor.
+FormulaListener.prototype.enterMayor = function(ctx) {
+};
+
+// Exit a parse tree produced by FormulaParser#mayor.
+FormulaListener.prototype.exitMayor = function(ctx) {
+};
+
+
+// Enter a parse tree produced by FormulaParser#menor.
+FormulaListener.prototype.enterMenor = function(ctx) {
+};
+
+// Exit a parse tree produced by FormulaParser#menor.
+FormulaListener.prototype.exitMenor = function(ctx) {
+};
+
+
+// Enter a parse tree produced by FormulaParser#mayori.
+FormulaListener.prototype.enterMayori = function(ctx) {
+};
+
+// Exit a parse tree produced by FormulaParser#mayori.
+FormulaListener.prototype.exitMayori = function(ctx) {
+};
+
+
+// Enter a parse tree produced by FormulaParser#menori.
+FormulaListener.prototype.enterMenori = function(ctx) {
+};
+
+// Exit a parse tree produced by FormulaParser#menori.
+FormulaListener.prototype.exitMenori = function(ctx) {
+};
+
+
+// Enter a parse tree produced by FormulaParser#igual.
+FormulaListener.prototype.enterIgual = function(ctx) {
+};
+
+// Exit a parse tree produced by FormulaParser#igual.
+FormulaListener.prototype.exitIgual = function(ctx) {
+};
+
+
+// Enter a parse tree produced by FormulaParser#distinto.
+FormulaListener.prototype.enterDistinto = function(ctx) {
+};
+
+// Exit a parse tree produced by FormulaParser#distinto.
+FormulaListener.prototype.exitDistinto = function(ctx) {
 };
 
 

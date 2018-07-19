@@ -1,5 +1,5 @@
 var Excel = require("exceljs")
-const { evaluarExpresion } = require('./gramatica');
+const { celdasPorNumeros, evaluarExpresion } = require('./gramatica');
 const { actualizarTag, existeTag, accesoPlanilla } = require('./tags');
 
 module.exports = function(RED) {
@@ -27,7 +27,9 @@ module.exports = function(RED) {
 
           xls_filas.forEach(function(xls_fila) {
 
-            evaluarExpresion(xls_fila, (valor, attr) => {
+            celdasPorNumeros(xls_fila)
+
+            evaluarExpresion(xls_fila, (valor, attr) => {              
               msg.payload.valor = valor
               msg.payload.attr = attr
               node.send(msg)
@@ -54,7 +56,6 @@ module.exports = function(RED) {
 ------- FUNC AUXILIARES
 */
 toTag = (topico) => {
-
   topico= trimChar(topico, "/")
   topico = topico.replace(/\//g, "_")
   return topico.toUpperCase()
