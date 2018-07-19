@@ -2,8 +2,8 @@ const { procesar } = require("./antlr")
 
 celdasPorNumeros = (xls_fila) => {
 
-  xls_fila.formula = xls_fila.formula.replace(/B\d/, xls_fila.B, "g");
-  xls_fila.formula = xls_fila.formula.replace(/C\d/, xls_fila.C, "g");
+  xls_fila.formula = xls_fila.formula.replace(/B\d/g, xls_fila.B);
+  xls_fila.formula = xls_fila.formula.replace(/C\d/g, xls_fila.C);
 }
 
 evaluarExpresion = (xls_fila, cb) => {
