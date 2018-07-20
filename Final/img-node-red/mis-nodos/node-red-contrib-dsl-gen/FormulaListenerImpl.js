@@ -13,10 +13,6 @@ FormulaListenerImpl.prototype = Object.create(FormulaListener.prototype);
 FormulaListenerImpl.prototype.constructor = FormulaListenerImpl;
 
 
-// Enter a parse tree produced by FormulaParser#operIf.
-FormulaListener.prototype.enterOperIf = function(ctx) {
-};
-
 // Exit a parse tree produced by FormulaParser#operIf.
 FormulaListener.prototype.exitOperIf = function(ctx) {
 
@@ -30,11 +26,6 @@ FormulaListener.prototype.exitOperIf = function(ctx) {
     this.res.push(valF)
 };
 
-
-// Enter a parse tree produced by FormulaParser#operOr.
-FormulaListener.prototype.enterOperOr = function(ctx) {
-};
-
 // Exit a parse tree produced by FormulaParser#operOr.
 FormulaListener.prototype.exitOperOr = function(ctx) {
 
@@ -42,11 +33,6 @@ FormulaListener.prototype.exitOperOr = function(ctx) {
   const valF = this.res.pop()
 
   this.res.push(valV || valF)
-};
-
-
-// Enter a parse tree produced by FormulaParser#operAnd.
-FormulaListener.prototype.enterOperAnd = function(ctx) {
 };
 
 // Exit a parse tree produced by FormulaParser#operAnd.
@@ -58,28 +44,9 @@ FormulaListener.prototype.exitOperAnd = function(ctx) {
   this.res.push(valV && valF)
 };
 
-
-// Enter a parse tree produced by FormulaParser#comparacion.
-FormulaListener.prototype.enterComparacion = function(ctx) {
-};
-
-// Exit a parse tree produced by FormulaParser#comparacion.
-FormulaListener.prototype.exitComparacion = function(ctx) {
-};
-
-
-// Enter a parse tree produced by FormulaParser#mayor.
-FormulaListener.prototype.enterMayor = function(ctx) {
-};
-
 // Exit a parse tree produced by FormulaParser#mayor.
 FormulaListener.prototype.exitMayor = function(ctx) {
   this.res.push(ctx.value);
-};
-
-
-// Enter a parse tree produced by FormulaParser#menor.
-FormulaListener.prototype.enterMenor = function(ctx) {
 };
 
 // Exit a parse tree produced by FormulaParser#menor.
@@ -87,19 +54,9 @@ FormulaListener.prototype.exitMenor = function(ctx) {
   this.res.push(ctx.value);
 };
 
-
-// Enter a parse tree produced by FormulaParser#mayori.
-FormulaListener.prototype.enterMayori = function(ctx) {
-};
-
 // Exit a parse tree produced by FormulaParser#mayori.
 FormulaListener.prototype.exitMayori = function(ctx) {
   this.res.push(ctx.value);
-};
-
-
-// Enter a parse tree produced by FormulaParser#menori.
-FormulaListener.prototype.enterMenori = function(ctx) {
 };
 
 // Exit a parse tree produced by FormulaParser#menori.
@@ -107,19 +64,9 @@ FormulaListener.prototype.exitMenori = function(ctx) {
   this.res.push(ctx.value);
 };
 
-
-// Enter a parse tree produced by FormulaParser#igual.
-FormulaListener.prototype.enterIgual = function(ctx) {
-};
-
 // Exit a parse tree produced by FormulaParser#igual.
 FormulaListener.prototype.exitIgual = function(ctx) {
   this.res.push(ctx.value);
-};
-
-
-// Enter a parse tree produced by FormulaParser#distinto.
-FormulaListener.prototype.enterDistinto = function(ctx) {
 };
 
 // Exit a parse tree produced by FormulaParser#distinto.
@@ -127,14 +74,6 @@ FormulaListener.prototype.exitDistinto = function(ctx) {
   this.res.push(ctx.value);
 };
 
-
-// Enter a parse tree produced by FormulaParser#operando.
-FormulaListener.prototype.enterOperando = function(ctx) {
-};
-
-// Exit a parse tree produced by FormulaParser#operando.
-FormulaListener.prototype.exitOperando = function(ctx) {
-};
 
 /*
 @param {string} topico

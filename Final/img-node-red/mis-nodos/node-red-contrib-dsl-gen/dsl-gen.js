@@ -2,6 +2,11 @@ var Excel = require("exceljs")
 const { celdasPorNumeros, evaluarExpresion } = require('./gramatica');
 const { actualizarTag, existeTag, accesoPlanilla } = require('./tags');
 
+/*
+https://github.com/node-red/node-red-dashboard/blob/master/nodes/ui_form.js
+https://github.com/node-red/node-red-dashboard/blob/master/nodes/ui_form.html
+*/
+
 module.exports = function(RED) {
 
   function DSLGen(config) {
@@ -29,7 +34,7 @@ module.exports = function(RED) {
 
             celdasPorNumeros(xls_fila)
 
-            evaluarExpresion(xls_fila, (valor, attr) => {              
+            evaluarExpresion(xls_fila, (valor, attr) => {
               msg.payload.valor = valor
               msg.payload.attr = attr
               node.send(msg)
