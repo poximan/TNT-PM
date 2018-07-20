@@ -3,8 +3,8 @@ const { celdasPorNumeros, evaluarExpresion } = require('./gramatica');
 const { actualizarTag, existeTag, accesoPlanilla } = require('./tags');
 
 /*
-https://github.com/node-red/node-red-dashboard/blob/master/nodes/ui_form.js
-https://github.com/node-red/node-red-dashboard/blob/master/nodes/ui_form.html
+https://github.com/node-red/node-red-dashboard/blob/master/nodes/ui_form_tags.js
+https://github.com/node-red/node-red-dashboard/blob/master/nodes/ui_form_tags.html
 */
 
 module.exports = function(RED) {
