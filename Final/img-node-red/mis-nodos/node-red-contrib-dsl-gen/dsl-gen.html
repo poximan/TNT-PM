@@ -5,6 +5,9 @@
     category: 'function',
     color: '#a6bbcf',
     defaults: {
+      options: {
+        value:[{tag:'', valor :'', ref:'', formula:''}]
+      },
     },
     inputs:1,
     outputs:1,
@@ -13,17 +16,132 @@
     label: function() {
       return this.name || "dsl-gen";
     },
+    oneditprepare: function() {
+
+      function generateOption(i, option) {
+
+         var container = $('<li/>',{style:"background: #fff; margin:0; padding:8px 0px 0px; border-bottom: 1px solid #ccc;"});
+         var row = $('<div/>').appendTo(container);
+         $('<div/>',{style:"padding-top:5px; padding-left:75px;"}).appendTo(container);
+         $('<div/>',{style:"padding-top:5px; padding-left:20px;"}).appendTo(container);
+
+         $('<i style="color:#eee; cursor:move; margin-left:4px;" class="node-input-option-handle fa fa-bars"></i>').appendTo(row);
+
+         $('<input/>',{class:"node-input-option-tag",type:"text",style:"margin-left:7px; width:15%;", placeholder: '...', value:option.tag}).appendTo(row);
+         $('<input/>',{class:"node-input-option-valor",type:"text",style:"margin-left:7px; width:15%;", placeholder: '...', value:option.valor}).appendTo(row);
+         $('<input/>',{class:"node-input-option-ref",type:"text",style:"margin-left:7px; width:15%;", placeholder: '...', value:option.ref}).appendTo(row);
+         $('<input/>',{class:"node-input-option-formula",type:"text",style:"margin-left:7px; width:19%;", placeholder: '...', value:option.formula}).appendTo(row);
+
+         var typeField = $('<select/>',{class:"node-input-option-type",type:"text",style:"margin-left:7px; width:15%"}).appendTo(row);
+         var arr = [
+           {val : "stroke", text: 'stroke'},
+           {val : "fill", text: 'fill'},
+           {val : "text", text: 'text'}
+         ];
+
+         $(arr).each(function() {
+             var isSelected= false;
+             if (option.type == this.val) {
+                 isSelected = true;
+             }
+             typeField.append($("<option>").attr('value',this.val).text(this.text).prop('selected',isSelected));
+         });
+
+         var finalspan = $('<div/>',{style:"display:inline-block; width:5%;"}).appendTo(row);
+         var deleteButton = $('<a/>',{href:"#",class:"editor-button editor-button-small", style:"left:45%; position:relative;"}).appendTo(finalspan);
+         $('<i/>',{class:"fa fa-remove"}).appendTo(deleteButton);
+
+         deleteButton.click(function() {
+             container.css({"background":"#fee"});
+             container.fadeOut(300, function() {
+                 $(this).remove();
+             });
+         });
+         $("#node-input-option-container").append(container);
+      }
+      $("#node-input-add-option").click(function() {
+         generateOption($("#node-input-option-container").children().length+1, {});
+         $("#node-input-option-container-div").scrollTop($("#node-input-option-container-div").get(0).scrollHeight);
+      });
+      for (var i=0; i<this.options.length; i++) {
+         var option = this.options[i];
+         generateOption(i+1,option);
+      }
+      $( "#node-input-option-container" ).sortable({
+         axis: "y",
+         handle:".node-input-option-handle",
+         cursor: "move"
+      });
+    },
     oneditsave: function() {
-      let defaults = RED.nodes.registry.getNodeType("dsl-gen").defaults;
+      var options = $("#node-input-option-container").children();
+      var node = this;
+      node.options = [];
+
+      options.each(function(i) {
+          var option = $(this);
+          var o = {
+              tag: option.find(".node-input-option-tag").val(),
+              valor: option.find(".node-input-option-valor").val(),
+              ref: option.find(".node-input-option-ref").val(),
+              formula: option.find(".node-input-option-formula").val(),
+              type: option.find(".node-input-option-type").val()
+          };
+          node.options.push(o);
+      });
     }
   });
 
 </script>
 
 <script type="text/x-red" data-template-name="dsl-gen">
-  <div class="form-row">
 
+  <div class="form-row node-input-option-container-row" style="margin-bottom:0px; min-width:100px">
+    <div style="display:inline-block; width:100%; border:1px solid #ccc; border-radius:5px;">
+
+      <div style="width:100%; display: inline-block; background-color:#f3f3f3; padding-top:10px; padding-buttom:10px; border-top:0px solid; border-radius:5px 5px 0 0; border-bottom:1px solid #ccc;">
+        <div style="width:94%; display:inline-block; margin-left:28px">
+          <div style="width:16%; text-align:center; float:left;">tag</div>
+          <div style="width:16%; text-align:center; float:left;">valor</div>
+          <div style="width:17%; text-align:center; float:left;">ref</div>
+          <div style="width:20%; text-align:center; float:left;">formula</div>
+          <div style="margin-left:7px; width:16%; text-align:center; float:left;">attr</div>
+          <div style="width:10%; text-align:center; float:left;">Remove</div>
+        </div>
+      </div>
+
+      <div id="node-input-option-container-div" style=" height: 180px; padding: 5px; overflow-y:scroll;">
+        <ol id="node-input-option-container" style=" list-style-type:none; margin: 0;"></ol>
+      </div>
+
+    </div>
   </div>
+
+  <div class="form-row">
+      <a href="#" class="editor-button editor-button-small" id="node-input-add-option" style="margin-top: 4px; margin-left: 5px;"><i class="fa fa-plus"></i> <span>formula</span></a>
+  </div>
+
+  <style>
+
+  input:checked + .slider {
+      background-color: #910000;
+  }
+  input:focus + .slider {
+      box-shadow: 0 0 1px #2196F3;
+  }
+  input:checked + .slider:before {
+      -webkit-transform: translateX(11px);
+      -ms-transform: translateX(11px);
+      transform: translateX(11px);
+  }
+  /* Rounded sliders */
+  .slider.round {
+      border-radius: 34px;
+  }
+  .slider.round:before {
+      border-radius: 50%;
+  }
+  </style>
 </script>
 
 <script type="text/x-red" data-help-name="dsl-gen">

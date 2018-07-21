@@ -1,27 +1,27 @@
 [
     {
-        "id": "9f601b7d.d9b498",
+        "id": "d9819a4f.710e58",
         "type": "tab",
         "label": "set msg",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "52e4ec12.b268b4",
+        "id": "a73e864.ca860f8",
         "type": "tab",
         "label": "get msg",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "39b5a36b.2984e4",
+        "id": "bdd0070d.6f6358",
         "type": "tab",
         "label": "dsl",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "14cc6399.f2e4ac",
+        "id": "47e0f5d.83a208c",
         "type": "mqtt-broker",
         "z": "",
         "name": "",
@@ -43,25 +43,26 @@
         "willPayload": ""
     },
     {
-        "id": "b13e37da.282c7",
+        "id": "88042d6.ddb06d",
         "type": "ui_group",
         "z": "",
         "name": "centrifugado",
-        "tab": "70e06f61.c6ee08",
-        "order": 1,
+        "tab": "348bdf72.f9cd88",
+        "order": 2,
         "disp": true,
         "width": "6",
         "collapse": false
     },
     {
-        "id": "70e06f61.c6ee08",
+        "id": "348bdf72.f9cd88",
         "type": "ui_tab",
         "z": "",
         "name": "simulacion eventos",
-        "icon": "dashboard"
+        "icon": "dashboard",
+        "order": 3
     },
     {
-        "id": "b427e725.f85db",
+        "id": "b9804127.5ada5",
         "type": "ui_base",
         "theme": {
             "name": "theme-light",
@@ -150,36 +151,36 @@
         }
     },
     {
-        "id": "f4797124.fb6518",
+        "id": "3b3618a1.966458",
         "type": "ui_group",
         "z": "",
         "name": "fermentacion",
-        "tab": "70e06f61.c6ee08",
-        "order": 2,
+        "tab": "348bdf72.f9cd88",
+        "order": 1,
         "disp": true,
         "width": "6",
         "collapse": false
     },
     {
-        "id": "d32cfe77.794b3",
+        "id": "3ea8c7eb.00758",
         "type": "mqtt out",
-        "z": "9f601b7d.d9b498",
+        "z": "d9819a4f.710e58",
         "name": "",
         "topic": "",
         "qos": "0",
         "retain": "true",
-        "broker": "14cc6399.f2e4ac",
+        "broker": "47e0f5d.83a208c",
         "x": 390,
         "y": 100,
         "wires": []
     },
     {
-        "id": "747cf702.3fc47",
+        "id": "3827cd9b.4ac792",
         "type": "ui_slider",
-        "z": "9f601b7d.d9b498",
+        "z": "d9819a4f.710e58",
         "name": "",
         "label": "presion tanque",
-        "group": "f4797124.fb6518",
+        "group": "3b3618a1.966458",
         "order": 0,
         "width": 0,
         "height": 0,
@@ -192,17 +193,17 @@
         "y": 140,
         "wires": [
             [
-                "d32cfe77.794b3"
+                "3ea8c7eb.00758"
             ]
         ]
     },
     {
-        "id": "cd7e4e93.9d91c",
+        "id": "f29d10a8.b2fa78",
         "type": "ui_switch",
-        "z": "9f601b7d.d9b498",
+        "z": "d9819a4f.710e58",
         "name": "",
         "label": "comando marcha bomba",
-        "group": "b13e37da.282c7",
+        "group": "88042d6.ddb06d",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -222,46 +223,46 @@
         "y": 60,
         "wires": [
             [
-                "d32cfe77.794b3"
+                "3ea8c7eb.00758"
             ]
         ]
     },
     {
-        "id": "d672f373.b3ab48",
+        "id": "cd9c529c.315ff8",
         "type": "mqtt in",
-        "z": "52e4ec12.b268b4",
+        "z": "a73e864.ca860f8",
         "name": "presion tanque",
         "topic": "/pm/ipa/fermentacion/presion",
         "qos": "0",
-        "broker": "14cc6399.f2e4ac",
+        "broker": "47e0f5d.83a208c",
         "x": 120,
         "y": 60,
         "wires": [
             [
-                "92cbda50.25fcf"
+                "df9b7543.fad408"
             ]
         ]
     },
     {
-        "id": "fe5c8f7f.945db8",
+        "id": "3be35e5f.9845c2",
         "type": "mqtt in",
-        "z": "52e4ec12.b268b4",
+        "z": "a73e864.ca860f8",
         "name": "marcha bomba",
         "topic": "/pm/ipa/centrifugado/marcha",
         "qos": "0",
-        "broker": "14cc6399.f2e4ac",
+        "broker": "47e0f5d.83a208c",
         "x": 120,
         "y": 120,
         "wires": [
             [
-                "6d8d426c.b5f45c"
+                "998e7e29.a84df"
             ]
         ]
     },
     {
-        "id": "6d8d426c.b5f45c",
+        "id": "998e7e29.a84df",
         "type": "function",
-        "z": "52e4ec12.b268b4",
+        "z": "a73e864.ca860f8",
         "name": "marcha/parada",
         "func": "msg.color = (msg.payload === \"true\")? \"lime\" : \"red\"\nreturn msg;",
         "outputs": 1,
@@ -270,15 +271,15 @@
         "y": 220,
         "wires": [
             [
-                "2d0c7afc.8f792e"
+                "6fbe1a59.a4fdf4"
             ]
         ]
     },
     {
-        "id": "2d0c7afc.8f792e",
+        "id": "6fbe1a59.a4fdf4",
         "type": "ui_text",
-        "z": "52e4ec12.b268b4",
-        "group": "b13e37da.282c7",
+        "z": "a73e864.ca860f8",
+        "group": "88042d6.ddb06d",
         "order": 2,
         "width": 0,
         "height": 0,
@@ -291,10 +292,10 @@
         "wires": []
     },
     {
-        "id": "92cbda50.25fcf",
+        "id": "df9b7543.fad408",
         "type": "ui_text",
-        "z": "52e4ec12.b268b4",
-        "group": "f4797124.fb6518",
+        "z": "a73e864.ca860f8",
+        "group": "3b3618a1.966458",
         "order": 0,
         "width": 0,
         "height": 0,
@@ -307,52 +308,39 @@
         "wires": []
     },
     {
-        "id": "f38d309d.eddc28",
-        "type": "dsl-gen",
-        "z": "39b5a36b.2984e4",
-        "x": 200,
-        "y": 140,
-        "wires": [
-            [
-                "746798c8.06f7c8",
-                "9c91c1ed.360be8"
-            ]
-        ]
-    },
-    {
-        "id": "9738a77b.d5df5",
+        "id": "83fe2eb8.ab3d38",
         "type": "mqtt in",
-        "z": "39b5a36b.2984e4",
+        "z": "bdd0070d.6f6358",
         "name": "todas las pub",
         "topic": "/#",
         "qos": "0",
-        "broker": "14cc6399.f2e4ac",
+        "broker": "47e0f5d.83a208c",
         "x": 110,
         "y": 60,
         "wires": [
             [
-                "f38d309d.eddc28"
+                "a0f0d0bb.0f0dd"
             ]
         ]
     },
     {
-        "id": "746798c8.06f7c8",
+        "id": "93e0462.eda6b38",
         "type": "debug",
-        "z": "39b5a36b.2984e4",
+        "z": "bdd0070d.6f6358",
         "name": "topic",
         "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "topic",
-        "x": 330,
+        "x": 370,
         "y": 220,
         "wires": []
     },
     {
-        "id": "9c91c1ed.360be8",
+        "id": "17c69645.f81b0a",
         "type": "debug",
-        "z": "39b5a36b.2984e4",
+        "z": "bdd0070d.6f6358",
         "name": "payload",
         "active": true,
         "tosidebar": true,
@@ -362,5 +350,27 @@
         "x": 280,
         "y": 280,
         "wires": []
+    },
+    {
+        "id": "a0f0d0bb.0f0dd",
+        "type": "dsl-gen",
+        "z": "bdd0070d.6f6358",
+        "options": [
+            {
+                "tag": "",
+                "valor": "",
+                "ref": "",
+                "formula": "",
+                "type": "stroke"
+            }
+        ],
+        "x": 220,
+        "y": 140,
+        "wires": [
+            [
+                "93e0462.eda6b38",
+                "17c69645.f81b0a"
+            ]
+        ]
     }
 ]
