@@ -319,7 +319,7 @@
         "y": 60,
         "wires": [
             [
-                "a0f0d0bb.0f0dd"
+                "fc82dbe9.ee4188"
             ]
         ]
     },
@@ -352,20 +352,20 @@
         "wires": []
     },
     {
-        "id": "a0f0d0bb.0f0dd",
+        "id": "fc82dbe9.ee4188",
         "type": "dsl-gen",
         "z": "bdd0070d.6f6358",
         "options": [
             {
-                "tag": "",
-                "valor": "",
-                "ref": "",
-                "formula": "",
+                "tag": "TAG_PRUEBA",
+                "valor": "3,5",
+                "ref": "4",
+                "formula": "IF(B2>C2);'bomba parada';'bomba marcha'",
                 "type": "stroke"
             }
         ],
         "x": 220,
-        "y": 140,
+        "y": 160,
         "wires": [
             [
                 "93e0462.eda6b38",

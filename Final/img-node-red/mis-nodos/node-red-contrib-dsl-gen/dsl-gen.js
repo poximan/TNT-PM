@@ -12,7 +12,16 @@ module.exports = function(RED) {
   function DSLGen(config) {
 
     RED.nodes.createNode(this, config);
+
     var node = this;
+
+    config.options.value.push({
+      tag: "ESTE_TAG",
+      valor: "3,2",
+      ref: "7",
+      formula: "IF(B2>C2);'bomba parada';'bomba marcha'",
+      type: "fill"
+    })
 
     /*
     ------- MENSAJE ENTRANTE

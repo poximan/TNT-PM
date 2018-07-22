@@ -6,8 +6,13 @@
     color: '#a6bbcf',
     defaults: {
       options: {
-        value:[{tag:'', valor :'', ref:'', formula:''}]
-      },
+        value:[
+          { tag:'TAG_PRUEBA',
+            valor :'3,5',
+            ref:'4',
+            formula:"IF(B2>C2);'bomba parada';'bomba marcha'"}
+          ]
+      }
     },
     inputs:1,
     outputs:1,
@@ -18,6 +23,12 @@
     },
     oneditprepare: function() {
 
+      this.resizeRule = function(option,newWidth) {
+          //option.find(".node-input-option-type").width(newWidth);
+          //  option.find(".node-input-option-label").width(newWidth);
+          //  option.find(".node-input-option-value").width(newWidth);
+      }
+
       function generateOption(i, option) {
 
          var container = $('<li/>',{style:"background: #fff; margin:0; padding:8px 0px 0px; border-bottom: 1px solid #ccc;"});
@@ -27,12 +38,12 @@
 
          $('<i style="color:#eee; cursor:move; margin-left:4px;" class="node-input-option-handle fa fa-bars"></i>').appendTo(row);
 
-         $('<input/>',{class:"node-input-option-tag",type:"text",style:"margin-left:7px; width:15%;", placeholder: '...', value:option.tag}).appendTo(row);
-         $('<input/>',{class:"node-input-option-valor",type:"text",style:"margin-left:7px; width:15%;", placeholder: '...', value:option.valor}).appendTo(row);
-         $('<input/>',{class:"node-input-option-ref",type:"text",style:"margin-left:7px; width:15%;", placeholder: '...', value:option.ref}).appendTo(row);
-         $('<input/>',{class:"node-input-option-formula",type:"text",style:"margin-left:7px; width:19%;", placeholder: '...', value:option.formula}).appendTo(row);
+         $('<input/>',{class:"node-input-option-tag",type:"text",style:"margin-left:7px; width:25%;", placeholder: '...', value:option.tag}).appendTo(row);
+         $('<input/>',{class:"node-input-option-valor",type:"text",style:"margin-left:7px; width:8%;", placeholder: '...', value:option.valor}).appendTo(row);
+         $('<input/>',{class:"node-input-option-ref",type:"text",style:"margin-left:7px; width:8%;", placeholder: '...', value:option.ref}).appendTo(row);
+         $('<input/>',{class:"node-input-option-formula",type:"text",style:"margin-left:7px; width:25%;", placeholder: '...', value:option.formula}).appendTo(row);
 
-         var typeField = $('<select/>',{class:"node-input-option-type",type:"text",style:"margin-left:7px; width:15%"}).appendTo(row);
+         var typeField = $('<select/>',{class:"node-input-option-type",type:"text",style:"margin-left:7px; width:10%"}).appendTo(row);
          var arr = [
            {val : "stroke", text: 'stroke'},
            {val : "fill", text: 'fill'},
@@ -89,6 +100,14 @@
           };
           node.options.push(o);
       });
+    },
+    oneditresize: function() {
+      var options = $("#node-input-option-container").children();
+      var newWidth = ($("#node-input-option-container").width() - 175)/2;
+      var node = this;
+      options.each(function(i) {
+          node.resizeRule($(this),newWidth);
+      });
     }
   });
 
@@ -100,12 +119,12 @@
     <div style="display:inline-block; width:100%; border:1px solid #ccc; border-radius:5px;">
 
       <div style="width:100%; display: inline-block; background-color:#f3f3f3; padding-top:10px; padding-buttom:10px; border-top:0px solid; border-radius:5px 5px 0 0; border-bottom:1px solid #ccc;">
-        <div style="width:94%; display:inline-block; margin-left:28px">
-          <div style="width:16%; text-align:center; float:left;">tag</div>
-          <div style="width:16%; text-align:center; float:left;">valor</div>
-          <div style="width:17%; text-align:center; float:left;">ref</div>
-          <div style="width:20%; text-align:center; float:left;">formula</div>
-          <div style="margin-left:7px; width:16%; text-align:center; float:left;">attr</div>
+        <div style="width:94%; display:inline-block; margin-left:24px">
+          <div style="width:27%; text-align:center; float:left;">tag</div>
+          <div style="width:9%; text-align:center; float:left;">valor</div>
+          <div style="width:9%; text-align:center; float:left;">ref</div>
+          <div style="width:27%; text-align:center; float:left;">formula</div>
+          <div style="width:8%; text-align:center; float:left;">attr</div>
           <div style="width:10%; text-align:center; float:left;">Remove</div>
         </div>
       </div>
