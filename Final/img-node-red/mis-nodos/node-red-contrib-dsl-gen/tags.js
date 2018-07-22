@@ -2,9 +2,9 @@ var Excel = require("exceljs")
 
 var tags_conocidos = []
 
-actualizarTag = () => {
+actualizarTag = (cb) => {
 
-  new Promise((resolve, reject) => {
+  const pr = new Promise((resolve, reject) => {
 
     var workbook = new Excel.Workbook();
     workbook.xlsx.readFile("dominio/formulas.xlsx")
@@ -16,16 +16,19 @@ actualizarTag = () => {
       .eachCell({ includeEmpty: false }, (cell, rowNumber) => {
         tags_conocidos.push(cell.value)
       })
-      resolve(workbook)
     })
+    resolve(workbook)
   })
+  cb(pr)
 }
 
 existeTag = (tag) => {
   if(tags_conocidos.includes(tag))
     return "existeTag"
-  else
+  else{
+    console.log(tag);
     return "noExisteTag"
+  }
 }
 
 /*

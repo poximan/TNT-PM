@@ -11,6 +11,24 @@ Los mensajes de entrada serán actualizaciones de los valores de las variables q
 
 ![TNT](https://github.com/poximan/TNT-PM/blob/master/Final/imagenes/esquema.png?raw=true "Esquema")<br/>
 
+## Solucion propuesta
+Se construyó un nodo node-red que procesa su entrada de la siguiente forma:
+1. Escucha todo tipo de mensajes que respeten el formato ```msg.topic``` estandar de node-red
+2. Recupera el topico del mensaje y lo transforma a TAG estilo UPPER_CASE_SEPARADO_POR_GUION.
+Por ejemplo el mensaje jerarquico /sitio/proceso/equipo/valor -> a tag plano SITIO_PROCESO_EQUIPO_VALOR = {valor}.
+3. El tag obtenido es buscado en la lista de tags conocidos por el nodo.
+Esta informacion es dinamica y depende de la lista actual de tags en la planilla con direccion local /TNT-PM/Final/dominio/formulas.xlsx.
+4. Si se sabe que el tag existe se accede a planilla para levantar las filas completas que le referencian.
+Cada fila respeta el formato ```{ tag, valor actual (entrada), referencia, formula, atributo para editar (salida)}```
+5. Un iterador sobre las filas coincidentes reemplaza las referencias a celda por valores. Es un trabajo del tipo B2>C3 -> {int conocido}>{int conocido}
+6. Se delega a un parser la expresion completa y se recupera el resultado.
+El parser es una herramienta de analisis lexico y sintactico, que convierte una secuencia de simbolos en un arbol sintactico que describe una gramatica. La gramatica es capaz de resolver la operacion y retorna el resultado.
+
+![TNT](https://github.com/poximan/TNT-PM/blob/master/Final/img-node-red/mis-nodos/node-red-contrib-dsl-gen/icons/parser.gif?raw=true "Esquema")<br/>
+
+7. El resultado se empaqueta en un payload que respeta el formato del inciso 1.
+8. Se envia el mensaje.
+
 ## Requisitos del sistema
 * Debe estar instalado Docker, gestor de contenedores virtuales (https://www.docker.com/). Este proyecto fue desarrollado con v17.12.0.
 

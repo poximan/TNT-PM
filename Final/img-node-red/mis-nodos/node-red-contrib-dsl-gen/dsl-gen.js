@@ -1,11 +1,6 @@
 var Excel = require("exceljs")
-const { celdasPorNumeros, evaluarExpresion } = require('./gramatica');
 const { actualizarTag, existeTag, accesoPlanilla } = require('./tags');
-
-/*
-https://github.com/node-red/node-red-dashboard/blob/master/nodes/ui_form_tags.js
-https://github.com/node-red/node-red-dashboard/blob/master/nodes/ui_form_tags.html
-*/
+const { celdasPorNumeros, evaluarExpresion } = require('./gramatica');
 
 module.exports = function(RED) {
 
@@ -15,14 +10,6 @@ module.exports = function(RED) {
 
     var node = this;
 
-    config.options.value.push({
-      tag: "ESTE_TAG",
-      valor: "3,2",
-      ref: "7",
-      formula: "IF(B2>C2);'bomba parada';'bomba marcha'",
-      type: "fill"
-    })
-
     /*
     ------- MENSAJE ENTRANTE
     */
@@ -30,23 +17,32 @@ module.exports = function(RED) {
 
       if (msg.topic != undefined ){
 
-        actualizarTag()
+        /*
+        actualiza la base de tags conocidos
+        son todos los tag de la planilla, sin repetir
+        */
+        actualizarTag((workbook) => {
 
-        let tag = toTag(msg.topic)
-        let valor = msg.payload;
-        msg.payload = { tag, attr: "", valor }
+          let tag = toTag(msg.topic)
+          let valor = msg.payload;
+          msg.payload = { tag, attr: "", valor }
 
-        const funcion = existeTag(tag)
-        accesoPlanilla[funcion](msg, (xls_filas) => {
+          /*
+          verifica que el tag construido desde el mensaje
+          sea un tag conocido de la planilla
+          */
+          const funcion = existeTag(tag)
+          accesoPlanilla[funcion](msg, (xls_filas) => {
 
-          xls_filas.forEach(function(xls_fila) {
+            xls_filas.forEach(function(xls_fila) {
 
-            celdasPorNumeros(xls_fila)
+              celdasPorNumeros(xls_fila)
 
-            evaluarExpresion(xls_fila, (valor, attr) => {
-              msg.payload.valor = valor
-              msg.payload.attr = attr
-              node.send(msg)
+              evaluarExpresion(xls_fila, (valor, attr) => {
+                msg.payload.valor = valor
+                msg.payload.attr = attr
+                node.send(msg)
+              })
             })
           })
         })
