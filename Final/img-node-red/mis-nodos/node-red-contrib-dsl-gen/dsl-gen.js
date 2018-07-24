@@ -7,7 +7,6 @@ module.exports = function(RED) {
   function DSLGen(config) {
 
     RED.nodes.createNode(this, config);
-
     var node = this;
 
     /*
@@ -46,6 +45,8 @@ module.exports = function(RED) {
             })
           })
         })
+      } else {
+        console.log("sin topico");
       }
     })
 
