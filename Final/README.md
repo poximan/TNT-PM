@@ -29,6 +29,14 @@ El parser es una herramienta de analisis lexico y sintactico, que convierte una 
 7. El resultado se empaqueta en un payload que respeta el formato del inciso 1.
 8. Se envia el mensaje.
 
+## Configuracion del caso de prueba
+En la direccion ```TNT-PM\Final\nodos-test.txt``` hay un caso de prueba con todos los nodos configurados para probar el nodo dsl. Copiar el texto completo y pegarlo en la ventana de importacion del menu hamburguesa en node-red. Esto creara tres solapas:
+* set msg: genera un mensaje usando las herramientas graficas de dashboad, y lo publica al broker.
+* get msg: lee el mensaje desde el broker y lo presenta en la misma ventana dashboard donde fue creado. Esto es util para probar en ciclo completo de pub/sus sin depender del nodo dsl que se esta probando.
+* dsl: suscriptor mqtt que delega el mensaje al nodo dsl, para realizar la transformacion y publicacion del resultado.
+
+* Broker: si dieron de alta dos broker. Uno local, en la misma red que los demas servicios docker, y otro en la nube con soporte de https://customer.cloudmqtt.com/instance.
+
 ## Requisitos del sistema
 * Debe estar instalado Docker, gestor de contenedores virtuales (https://www.docker.com/). Este proyecto fue desarrollado con v17.12.0.
 
